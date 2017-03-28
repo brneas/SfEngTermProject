@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="175.0" spacing="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="introMessage" text="Welcome" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="clockIn" mnemonicParsing="false" text="Clock In" />
+      <Button fx:id="clockOut" mnemonicParsing="false" text="Clock Out" />
+      <MenuButton fx:id="managerTools" mnemonicParsing="false" text="Manager Tools">
+        <items>
+          <MenuItem fx:id="genAccRep" mnemonicParsing="false" text="Generate Accounting Report" />
+          <MenuItem fx:id="manEmpTimes" mnemonicParsing="false" text="Manage Employee Times" />
+            <MenuItem mnemonicParsing="false" text="Manage Employees" />
+            <MenuItem mnemonicParsing="false" text="Manage Departments" />
+        </items>
+      </MenuButton>
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</VBox>
