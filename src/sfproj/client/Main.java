@@ -15,8 +15,10 @@ public class Main extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage = new Stage();
 		FXMLLoader fxml = new FXMLLoader(LoginGui.class.getResource("LoginGui.fxml"));
-		fxml.setController(new LoginGui(primaryStage));
+		LoginGui lg = new LoginGui(primaryStage);
+		fxml.setController(lg);
 		primaryStage.setScene(new Scene(fxml.load()));
+		lg.createHandlers();
 		primaryStage.show();
 	}
 }
