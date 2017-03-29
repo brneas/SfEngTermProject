@@ -11,6 +11,11 @@ public class ServerNetHandler extends AbstractServer{
 
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
+		System.out.println(msg);
+	}
+
+	@Override
+	protected void clientConnected(ConnectionToClient client) {
 
 	}
 

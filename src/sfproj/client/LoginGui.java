@@ -17,13 +17,17 @@ public class LoginGui {
 	@FXML
 	TextField usernameField;
 	@FXML
-	Button loginButton;
+	Button login;
 
 	private Stage loginStage;
 
 	public LoginGui(Stage loginStage) {
 		this.loginStage = loginStage;
-		loginButton.setOnAction(new EventHandler<ActionEvent>() {
+
+	}
+
+	void createHandlers() {
+		login.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
@@ -41,6 +45,7 @@ public class LoginGui {
 			FXMLLoader fxml = new FXMLLoader(ClientGui.class.getResource("ClientGui.fxml"));
 			fxml.setController(client);
 			clientStage.setScene(new Scene(fxml.load()));
+			clientStage.show();
 		} catch (UnknownHostException e) {
 			// TODO
 			e.printStackTrace();
