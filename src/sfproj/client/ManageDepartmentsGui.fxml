@@ -13,10 +13,10 @@
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Label>
-      <TableView layoutX="11.0" layoutY="48.0" prefHeight="306.0" prefWidth="307.0">
+      <TableView fx:id="deptList" layoutX="11.0" layoutY="48.0" prefHeight="306.0" prefWidth="307.0">
         <columns>
-          <TableColumn prefWidth="202.0" text="Name" />
-          <TableColumn prefWidth="104.0" text="Employees" />
+          <TableColumn fx:id="nameCol" prefWidth="202.0" text="Name" />
+          <TableColumn fx:id="empCol" prefWidth="104.0" text="Employees" />
         </columns>
       </TableView>
    </children>

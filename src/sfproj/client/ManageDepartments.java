@@ -16,18 +16,30 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class ManageDepartments {
 
+	private ObservableList<Department> departmentData = FXCollections.observableArrayList();
+	
+	@FXML Button addDept;
+	@FXML TableView<Department> deptList;
+	@FXML Label deptLabel;
+	@FXML TableColumn<Department, String> nameCol;
+	@FXML TableColumn<Department, String> empCol;
 	@FXML
-	Button addDept;
-	@FXML
-	TableView<String> deptList;
-	@FXML
-	Label deptLabel;
+    private void initialize() {
+		nameCol.setCellValueFactory(new PropertyValueFactory<Department, String>("DepartmentName"));
+		empCol.setCellValueFactory(new PropertyValueFactory<Department, String>("EmployeeNum"));
+		departmentData.add(new Department("Department 1", "15"));
+		departmentData.add(new Department("Department 2", "7"));
+		departmentData.add(new Department("Department 3", "45"));
+		deptList.setItems(departmentData);
+	}
 	
 	private Stage manageDepartmentsStage;
 	
