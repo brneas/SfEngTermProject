@@ -30,12 +30,9 @@ public class ClientGui {
 	
 	private Stage clientStage;
 
-	ClientNetHandler cnh;
-	private final String serverIPA = "localhost";
-	private final int port = 800;
-
 	public ClientGui(Stage loginStage) throws IOException {
-		cnh = new ClientNetHandler(serverIPA, port);
+		this.clientStage = loginStage;
+		//cnh = new ClientNetHandler(serverIPA, port);
 	}
 	
 	public void manageDepartments(){

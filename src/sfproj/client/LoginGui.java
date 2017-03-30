@@ -14,6 +14,10 @@ import javafx.stage.Stage;
 
 public class LoginGui {
 
+	ClientNetHandler cnh;
+	private final String serverIPA = "localhost";
+	private final int port = 800;
+	
 	@FXML
 	TextField usernameField;
 	@FXML
@@ -39,7 +43,8 @@ public class LoginGui {
 
 	private void login() {
 		try {
-
+			cnh = new ClientNetHandler(serverIPA, port);
+			cnh.sendToServer("Login from " + usernameField.getText());
 			ClientGui client  = new ClientGui(loginStage);
 			Stage clientStage = new Stage();
 			FXMLLoader fxml = new FXMLLoader(ClientGui.class.getResource("ClientGui.fxml"));

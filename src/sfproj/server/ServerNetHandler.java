@@ -16,7 +16,6 @@ public class ServerNetHandler extends AbstractServer{
 
 	@Override
 	protected void clientConnected(ConnectionToClient client) {
-
 	}
 
 }

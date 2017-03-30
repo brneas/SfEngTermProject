@@ -13,7 +13,7 @@ public class ClientNetHandler extends AbstractClient{
 
 	@Override
 	protected void handleMessageFromServer(Object msg) {
-
+		System.out.println(msg);
 	}
 
 }

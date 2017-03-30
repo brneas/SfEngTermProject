@@ -15,22 +15,32 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class AddDepartment {
-	@FXML
-	Button addDept;
-	@FXML
-	Label departmentName;
-	@FXML
-	TextField deptName;
 	
-	private Stage addDepartmentsStage;
+	ClientNetHandler cnh;
+	private final String serverIPA = "localhost";
+	private final int port = 800;
 	
-	public AddDepartment(Stage addDepartmentsStage){
-		this.addDepartmentsStage = addDepartmentsStage;
+	@FXML Button addDept;
+	@FXML Label departmentName;
+	@FXML TextField deptName;
+	
+	private Stage addDepartmentStage;
+	
+	public AddDepartment(Stage addDepartmentStage) throws IOException{
+		this.addDepartmentStage = addDepartmentStage;
+		cnh = new ClientNetHandler(serverIPA, port);
 	}
 	
 	public void addDepartment(){
-		System.out.println(deptName.getText() + " added.");
-		addDepartmentsStage.close();
-		//This will throw errors and not close.
+		try{
+			cnh.sendToServer("Add Department: " + deptName.getText());
+			addDepartmentStage.close();
+		} catch (UnknownHostException e) {
+			// TODO
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO
+			e.printStackTrace();
+		}
 	}
 }
