@@ -16,7 +16,7 @@ public class LoginGui {
 
 	ClientNetHandler cnh;
 	private final String serverIPA = "localhost";
-	private final int port = 800;
+	private final int port = 5000;
 	
 	@FXML
 	TextField usernameField;
