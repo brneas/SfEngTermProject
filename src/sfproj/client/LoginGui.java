@@ -46,6 +46,7 @@ public class LoginGui {
 			fxml.setController(client);
 			clientStage.setScene(new Scene(fxml.load()));
 			clientStage.show();
+			loginStage.close();
 		} catch (UnknownHostException e) {
 			// TODO
 			e.printStackTrace();
