@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="556.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="addEmp" layoutX="449.0" layoutY="14.0" mnemonicParsing="false" onAction="#addEmployee" text="Add Employee" />
+      <TableView fx:id="empList" layoutX="14.0" layoutY="50.0" prefHeight="466.0" prefWidth="528.0">
+        <columns>
+          <TableColumn fx:id="empName" prefWidth="164.0" text="Name" />
+          <TableColumn fx:id="deptName" prefWidth="151.0" text="Department" />
+            <TableColumn fx:id="empRank" prefWidth="65.0" text="Rank" />
+            <TableColumn fx:id="empHPay" prefWidth="71.0" text="Hourly Pay" />
+            <TableColumn fx:id="empWPay" prefWidth="76.0" text="Weeks Pay" />
+        </columns>
+      </TableView>
+      <Label fx:id="empLbl" layoutX="14.0" layoutY="14.0" text="Employees">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+   </children>
+</Pane>
