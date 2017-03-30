@@ -20,30 +20,31 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class ManageDepartments {
+public class ManageEmployees {
 
 	@FXML
-	Button addDept;
+	Button addEmp;
 	@FXML
-	TableView<String> deptList;
+	TableView<String> empList;
 	@FXML
-	Label deptLabel;
+	Label empLbl;
 	
-	private Stage manageDepartmentsStage;
+	private Stage manageEmployeesStage;
+	final ObservableList<String> listItems = FXCollections.observableArrayList("Add Items here"); 
 	
-	public ManageDepartments(Stage manageDepartmentsStage){
-		this.manageDepartmentsStage = manageDepartmentsStage;
+	public ManageEmployees(Stage manageEmployeesStage){
+		this.manageEmployeesStage = manageEmployeesStage;
 	}
 	
-	public void addDepartment(){
+	public void addEmployee(){
 		try {
-			AddDepartment addDept  = new AddDepartment(manageDepartmentsStage);
-			Stage addDepartmentStage = new Stage();
-			FXMLLoader fxml = new FXMLLoader(AddDepartment.class.getResource("AddDepartmentGui.fxml"));
-			fxml.setController(addDept);
-			addDepartmentStage.setScene(new Scene(fxml.load()));
-			addDepartmentStage.setTitle("Add Department");
-			addDepartmentStage.show();
+			AddEmployee addEmp  = new AddEmployee(manageEmployeesStage);
+			Stage manageEmployeesStage = new Stage();
+			FXMLLoader fxml = new FXMLLoader(AddEmployee.class.getResource("AddEmployeeGui.fxml"));
+			fxml.setController(addEmp);
+			manageEmployeesStage.setScene(new Scene(fxml.load()));
+			manageEmployeesStage.setTitle("Add Employee");
+			manageEmployeesStage.show();
 		} catch (UnknownHostException e) {
 			// TODO
 			e.printStackTrace();

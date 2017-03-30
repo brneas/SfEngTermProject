@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="556.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="addEmp" layoutX="449.0" layoutY="14.0" mnemonicParsing="false" onAction="#addEmployee" text="Add Employee" />
+      <TableView fx:id="empList" layoutX="14.0" layoutY="50.0" prefHeight="466.0" prefWidth="528.0">
+        <columns>
+          <TableColumn prefWidth="164.0" text="Name" />
+          <TableColumn prefWidth="151.0" text="Department" />
+            <TableColumn prefWidth="65.0" text="Rank" />
+            <TableColumn prefWidth="71.0" text="Hourly Pay" />
+            <TableColumn prefWidth="76.0" text="Weeks Pay" />
+        </columns>
+      </TableView>
+      <Label fx:id="empLbl" layoutX="14.0" layoutY="31.0" text="Employees" />
+   </children>
+</Pane>

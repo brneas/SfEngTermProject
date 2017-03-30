@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="329.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="367.0" prefWidth="329.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="addDept" layoutX="25.0" layoutY="14.0" mnemonicParsing="false" onAction="#addDepartment" text="Add Department" />
-      <ListView fx:id="deptList" layoutX="20.0" layoutY="81.0" prefHeight="302.0" prefWidth="295.0" />
-      <Label fx:id="deptLabel" layoutX="20.0" layoutY="64.0" text="Departments" />
+      <Button fx:id="addDept" layoutX="210.0" layoutY="14.0" mnemonicParsing="false" onAction="#addDepartment" text="Add Department" />
+      <Label fx:id="deptLabel" layoutX="14.0" layoutY="14.0" text="Departments">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <TableView layoutX="11.0" layoutY="48.0" prefHeight="306.0" prefWidth="307.0">
+        <columns>
+          <TableColumn prefWidth="202.0" text="Name" />
+          <TableColumn prefWidth="104.0" text="Employees" />
+        </columns>
+      </TableView>
    </children>
 </Pane>

@@ -14,7 +14,7 @@
         <items>
           <MenuItem fx:id="genAccRep" mnemonicParsing="false" text="Generate Accounting Report" />
           <MenuItem fx:id="manEmpTimes" mnemonicParsing="false" text="Manage Employee Times" />
-            <MenuItem mnemonicParsing="false" text="Manage Employees" />
+            <MenuItem mnemonicParsing="false" onAction="#manageEmployees" text="Manage Employees" />
             <MenuItem mnemonicParsing="false" onAction="#manageDepartments" text="Manage Departments" />
         </items>
       </MenuButton>
