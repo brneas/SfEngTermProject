@@ -33,9 +33,9 @@ public class AddEmployee {
 	@FXML
 	private void initialize(){
 		ObservableList<String> empDept = FXCollections.observableArrayList(); 
-		empDept.add("Department 1");
-		empDept.add("Department 2");
-		empDept.add("Department 3");
+		empDept.add("1");
+		empDept.add("2");
+		empDept.add("3");
 		employeeDept.setItems(empDept);
 	}
 	
@@ -48,7 +48,8 @@ public class AddEmployee {
 	
 	public void addEmployee(){
 		try{
-			cnh.sendToServer("Add Employee: "+ employeeName.getText() + ", " + employeeDept.getValue() + ", " + payPerHour.getText());
+			//cnh.sendToServer("Add Employee: "+ employeeName.getText() + ", " + employeeDept.getValue() + ", " + payPerHour.getText());
+			cnh.sendToServer("AddEmployee|"+ employeeName.getText() + "|" + employeeDept.getValue() + "|" + payPerHour.getText());
 			addEmployeesStage.close();
 		} catch (UnknownHostException e) {
 			// TODO

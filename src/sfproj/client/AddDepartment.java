@@ -33,7 +33,8 @@ public class AddDepartment {
 	
 	public void addDepartment(){
 		try{
-			cnh.sendToServer("Add Department: " + deptName.getText());
+			//cnh.sendToServer("Add Department: " + deptName.getText());
+			cnh.sendToServer("AddDepartment|" + deptName.getText());
 			addDepartmentStage.close();
 		} catch (UnknownHostException e) {
 			// TODO
