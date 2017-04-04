@@ -6,8 +6,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.mysql.jdbc.PreparedStatement;
 
@@ -53,15 +51,29 @@ public class ServerNetHandler extends AbstractServer{
 				ps.executeUpdate();
 			}
 			else if(message[0].equals("RequestDepartment")){
-				List<Department> deptList = new ArrayList<Department>();
 				sStmt = "SELECT * FROM department";
 				rs = stmt.executeQuery(sStmt);
+				String tempString = "DepartmentList|";
 				while(rs.next()){
-					Department dept = new Department(rs.getString(0), "15");
-					deptList.add(dept);
+					tempString = tempString + rs.getString(2) + "|15|";
 				}
 				try {
-					client.sendToClient(deptList);
+					client.sendToClient(tempString);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.out.println("Send to client error");
+				}
+			}
+			else if(message[0].equals("RequestEmployee")){
+				sStmt = "SELECT * FROM employee";
+				rs = stmt.executeQuery(sStmt);
+				String tempString = "EmployeeList|";
+				while(rs.next()){
+					tempString = tempString + rs.getString(2) + "|" + rs.getInt(3) + "|" + rs.getDouble(4) + "|";
+				}
+				try {
+					client.sendToClient(tempString);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

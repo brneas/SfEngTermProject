@@ -1,5 +1,8 @@
 package sfproj.client;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Arrays;
@@ -24,6 +27,10 @@ import javafx.stage.Stage;
 
 public class ManageEmployees {
 
+	ClientNetHandler cnh;
+	private final String serverIPA = "localhost";
+	private final int port = 5000;
+	
 	private ObservableList<Employee> employeeData = FXCollections.observableArrayList();
 	
 	@FXML Button addEmp;
@@ -36,19 +43,25 @@ public class ManageEmployees {
 	@FXML TableColumn<Employee, String> empWPay;
 	@FXML
     private void initialize() {
+		try {
+			cnh = new ClientNetHandler(serverIPA, port);
+			cnh.sendToServer("RequestEmployee");
+			BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/employeeList.txt")));
+			String line;
+			while((line = reader.readLine()) != null){
+				String[] empLines = ((String) line).split("\\|");
+				employeeData.add(new Employee(empLines[0], empLines[1], "Employee", empLines[2], "100"));
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		empName.setCellValueFactory(new PropertyValueFactory<Employee, String>("Name"));
 		deptName.setCellValueFactory(new PropertyValueFactory<Employee, String>("Department"));
 		empRank.setCellValueFactory(new PropertyValueFactory<Employee, String>("Rank"));
 		empHPay.setCellValueFactory(new PropertyValueFactory<Employee, String>("HPay"));
 		empWPay.setCellValueFactory(new PropertyValueFactory<Employee, String>("WPay"));
-		employeeData.add(new Employee("John Smith", "Department 1", "Employee", "2.25", "50.00"));
-		employeeData.add(new Employee("Jane Doe", "Department 3", "Employee", "9.95", "497.35"));
-		employeeData.add(new Employee("Shane Queen", "Department 1", "Manager", "20.00", "800.00"));
-		employeeData.add(new Employee("Tylar Rhoades", "Department 2", "Manager", "10.00", "400.00"));
-		employeeData.add(new Employee("Oles Uri", "Department 1", "Employee", "1.50", "108.00"));
-		employeeData.add(new Employee("Branislava Hesiodos", "Department 1", "Employee", "3.50", "70.50"));
-		employeeData.add(new Employee("Renee Suzy", "Department 3", "Manager", "15.00", "600.00"));
-		employeeData.add(new Employee("Merlyn Lavonne", "Department 1", "Employee", "2.50", "25.50"));
 		empList.setItems(employeeData);
 	}
 	
