@@ -13,26 +13,23 @@ import javafx.stage.Stage;
 
 public class ClientGui {
 
-	@FXML
-	MenuItem genAccRep;
-	@FXML
-	MenuItem manEmpTimes;
-	@FXML
-	MenuItem manEmps;
-	@FXML
-	MenuItem manDepts;
-	@FXML
-	Button clockIn;
-	@FXML
-	Button clockOut;
-	@FXML
-	Label introMessage;
+	ClientNetHandler cnh;
+	private final String serverIPA = "localhost";
+	private final int port = 5000;
+	
+	@FXML MenuItem genAccRep;
+	@FXML MenuItem manEmpTimes;
+	@FXML MenuItem manEmps;
+	@FXML MenuItem manDepts;
+	@FXML Button clockIn;
+	@FXML Button clockOut;
+	@FXML Label introMessage;
 	
 	private Stage clientStage;
 
 	public ClientGui(Stage loginStage) throws IOException {
 		this.clientStage = loginStage;
-		//cnh = new ClientNetHandler(serverIPA, port);
+		cnh = new ClientNetHandler(serverIPA, port);
 	}
 	
 	public void manageDepartments(){
@@ -69,6 +66,15 @@ public class ClientGui {
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO
+			e.printStackTrace();
+		}
+	}
+	
+	public void clockIn(){
+		try {
+			cnh.sendToServer("ClockIn|+BullShit");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -44,7 +44,7 @@ public class LoginGui {
 	private void login() {
 		try {
 			cnh = new ClientNetHandler(serverIPA, port);
-			cnh.sendToServer("Login from " + usernameField.getText());
+			cnh.sendToServer("Login|" + usernameField.getText());
 			ClientGui client  = new ClientGui(loginStage);
 			Stage clientStage = new Stage();
 			FXMLLoader fxml = new FXMLLoader(ClientGui.class.getResource("ClientGui.fxml"));

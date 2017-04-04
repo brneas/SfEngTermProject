@@ -37,10 +37,10 @@ public class ServerNetHandler extends AbstractServer{
 			String message[] = ((String) msg).split("\\|");
 			//Need to change this to a switch statement probably
 			if(message[0].equals("AddEmployee")){
-				sStmt = "INSERT INTO employee(name,departmentID,pay) VALUES(?,?,?)";
+				sStmt = "INSERT INTO employee(name,departmentName,pay) VALUES(?,?,?)";
 				ps = con.prepareStatement(sStmt);
 				ps.setString(1, message[1]);
-				ps.setInt(2, Integer.parseInt(message[2]));
+				ps.setString(2, message[2]);
 				ps.setFloat(3, Float.parseFloat(message[3]));
 				ps.executeUpdate();
 			}
@@ -70,7 +70,7 @@ public class ServerNetHandler extends AbstractServer{
 				rs = stmt.executeQuery(sStmt);
 				String tempString = "EmployeeList|";
 				while(rs.next()){
-					tempString = tempString + rs.getString(2) + "|" + rs.getInt(3) + "|" + rs.getDouble(4) + "|";
+					tempString = tempString + rs.getString(2) + "|" + rs.getString(3) + "|" + rs.getDouble(4) + "|";
 				}
 				try {
 					client.sendToClient(tempString);
@@ -79,6 +79,22 @@ public class ServerNetHandler extends AbstractServer{
 					e.printStackTrace();
 					System.out.println("Send to client error");
 				}
+			}
+			else if(message[0].equals("Login")){
+				//client.setName(message[1]);
+				//System.out.println(client.getName());
+				client.setInfo(user, message[1]);
+			}
+			else if(message[0].equals("ClockIn")){
+				System.out.println("Crash");
+				System.out.println(client.toString());
+				System.out.println(client.getInfo(user));
+				sStmt = "INSERT INTO clock(eId,type,rank) VALUES(?,?,?)";
+				ps = con.prepareStatement(sStmt);
+				ps.setString(1, client.getInfo(user).toString());
+				ps.setString(2, "type"); //This needs to be changed later with a getUser using the client.getName()
+				ps.setInt(3, 0); 
+				ps.executeUpdate();
 			}
 			
 			rs.close();
