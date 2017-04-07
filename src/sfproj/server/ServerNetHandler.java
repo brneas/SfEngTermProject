@@ -86,14 +86,19 @@ public class ServerNetHandler extends AbstractServer{
 				client.setInfo(user, message[1]);
 			}
 			else if(message[0].equals("ClockIn")){
-				System.out.println("Crash");
-				System.out.println(client.toString());
-				System.out.println(client.getInfo(user));
 				sStmt = "INSERT INTO clock(eId,type,rank) VALUES(?,?,?)";
 				ps = con.prepareStatement(sStmt);
-				ps.setString(1, client.getInfo(user).toString());
-				ps.setString(2, "type"); //This needs to be changed later with a getUser using the client.getName()
+				ps.setString(1, message[1]);
+				ps.setString(2, "IN");
 				ps.setInt(3, 0); 
+				ps.executeUpdate();
+			}
+			else if(message[0].equals("ClockOut")){
+				sStmt = "INSERT INTO clock(eId,type,rank) VALUES(?,?,?)";
+				ps = con.prepareStatement(sStmt);
+				ps.setString(1, message[1]);
+				ps.setString(2, "OUT");
+				ps.setInt(3, 0); //This needs to be changed later to get the user rank.
 				ps.executeUpdate();
 			}
 			

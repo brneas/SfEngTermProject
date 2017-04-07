@@ -1,5 +1,8 @@
 package sfproj.client;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
@@ -45,6 +48,9 @@ public class LoginGui {
 		try {
 			cnh = new ClientNetHandler(serverIPA, port);
 			cnh.sendToServer("Login|" + usernameField.getText());
+			BufferedWriter writer = writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/user.txt")));
+			writer.write(usernameField.getText());
+			writer.flush();
 			ClientGui client  = new ClientGui(loginStage);
 			Stage clientStage = new Stage();
 			FXMLLoader fxml = new FXMLLoader(ClientGui.class.getResource("ClientGui.fxml"));

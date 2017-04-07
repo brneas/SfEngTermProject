@@ -1,5 +1,8 @@
 package sfproj.client;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
@@ -72,7 +75,20 @@ public class ClientGui {
 	
 	public void clockIn(){
 		try {
-			cnh.sendToServer("ClockIn|+BullShit");
+			BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/user.txt")));
+			String username = reader.readLine();
+			cnh.sendToServer("ClockIn|"+username);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void clockOut(){
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/user.txt")));
+			String username = reader.readLine();
+			cnh.sendToServer("ClockOut|"+username);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
