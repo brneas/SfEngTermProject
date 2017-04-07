@@ -34,6 +34,7 @@ public class ManageEmployees {
 	private ObservableList<Employee> employeeData = FXCollections.observableArrayList();
 	
 	@FXML Button addEmp;
+	@FXML Button manageTimes;
 	@FXML TableView<Employee> empList;
 	@FXML Label empLbl;
 	@FXML TableColumn<Employee, String> empName;
@@ -80,6 +81,24 @@ public class ManageEmployees {
 			manageEmployeesStage.setScene(new Scene(fxml.load()));
 			manageEmployeesStage.setTitle("Add Employee");
 			manageEmployeesStage.show();
+		} catch (UnknownHostException e) {
+			// TODO
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO
+			e.printStackTrace();
+		}
+	}
+	
+	public void manageTimes(){
+		try {
+			ManageEmployeeTimes manTimes  = new ManageEmployeeTimes(manageEmployeesStage);
+			Stage manageEmpTimesStage = new Stage();
+			FXMLLoader fxml = new FXMLLoader(ManageEmployeeTimes.class.getResource("ManageTimesGUI.fxml"));
+			fxml.setController(manTimes);
+			manageEmpTimesStage.setScene(new Scene(fxml.load()));
+			manageEmpTimesStage.setTitle("Manage Times");
+			manageEmpTimesStage.show();
 		} catch (UnknownHostException e) {
 			// TODO
 			e.printStackTrace();

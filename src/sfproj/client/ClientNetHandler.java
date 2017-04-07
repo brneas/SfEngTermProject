@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 import ocsf.client.AbstractClient;
 
 public class ClientNetHandler extends AbstractClient{
@@ -48,6 +50,14 @@ public class ClientNetHandler extends AbstractClient{
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+		}
+		else if(message[0].equals("Error")){
+			if(message[1].equals("1")){//Already clocked In
+				JOptionPane.showMessageDialog(null, "You are already clocked in.", "Clock In Error " + "Error", JOptionPane.INFORMATION_MESSAGE);
+			}
+			else if(message[1].equals("2")){//Already clocked out
+				JOptionPane.showMessageDialog(null, "You are already clocked out.", "Clock In Error " + "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 		

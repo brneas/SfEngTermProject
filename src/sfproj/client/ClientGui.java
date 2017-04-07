@@ -21,7 +21,6 @@ public class ClientGui {
 	private final int port = 5000;
 	
 	@FXML MenuItem genAccRep;
-	@FXML MenuItem manEmpTimes;
 	@FXML MenuItem manEmps;
 	@FXML MenuItem manDepts;
 	@FXML Button clockIn;
@@ -32,7 +31,6 @@ public class ClientGui {
 
 	public ClientGui(Stage loginStage) throws IOException {
 		this.clientStage = loginStage;
-		cnh = new ClientNetHandler(serverIPA, port);
 	}
 	
 	public void manageDepartments(){
@@ -77,6 +75,7 @@ public class ClientGui {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/user.txt")));
 			String username = reader.readLine();
+			cnh = new ClientNetHandler(serverIPA, port);
 			cnh.sendToServer("ClockIn|"+username);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -88,6 +87,7 @@ public class ClientGui {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/user.txt")));
 			String username = reader.readLine();
+			cnh = new ClientNetHandler(serverIPA, port);
 			cnh.sendToServer("ClockOut|"+username);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -22,5 +22,7 @@
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Label>
+      <Button fx:id="manageTimes" layoutX="231.0" layoutY="14.0" mnemonicParsing="false" onAction="#manageTimes" text="Manage Times" />
+      <Label layoutX="132.0" layoutY="36.0" text="Select an employee and hit manage times to edit times" />
    </children>
 </Pane>

@@ -83,23 +83,64 @@ public class ServerNetHandler extends AbstractServer{
 			else if(message[0].equals("Login")){
 				//client.setName(message[1]);
 				//System.out.println(client.getName());
-				client.setInfo(user, message[1]);
+				try {
+					client.sendToClient("Test");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			else if(message[0].equals("ClockIn")){
-				sStmt = "INSERT INTO clock(eId,type,rank) VALUES(?,?,?)";
-				ps = con.prepareStatement(sStmt);
+				String type = "";
+				String getClockStmt = "SELECT * FROM clock WHERE eID=? ORDER BY theTime DESC LIMIT 1";
+				ps = con.prepareStatement(getClockStmt);
 				ps.setString(1, message[1]);
-				ps.setString(2, "IN");
-				ps.setInt(3, 0); 
-				ps.executeUpdate();
+				rs = ps.executeQuery();
+				while(rs.next()){
+					type = rs.getString("type");
+				}
+				if(type.equals("IN")){
+					try {
+						client.sendToClient("Error|1");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else{
+					sStmt = "INSERT INTO clock(eId,type,rank) VALUES(?,?,?)";
+					ps = con.prepareStatement(sStmt);
+					ps.setString(1, message[1]);
+					ps.setString(2, "IN");
+					ps.setInt(3, 0); 
+					ps.executeUpdate();
+				}
 			}
 			else if(message[0].equals("ClockOut")){
-				sStmt = "INSERT INTO clock(eId,type,rank) VALUES(?,?,?)";
-				ps = con.prepareStatement(sStmt);
+				String type = "";
+				String getClockStmt = "SELECT * FROM clock WHERE eID=? ORDER BY theTime DESC LIMIT 1";
+				ps = con.prepareStatement(getClockStmt);
 				ps.setString(1, message[1]);
-				ps.setString(2, "OUT");
-				ps.setInt(3, 0); //This needs to be changed later to get the user rank.
-				ps.executeUpdate();
+				rs = ps.executeQuery();
+				while(rs.next()){
+					type = rs.getString("type");
+				}
+				if(type.equals("OUT")){
+					try {
+						client.sendToClient("Error|2");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else{
+					sStmt = "INSERT INTO clock(eId,type,rank) VALUES(?,?,?)";
+					ps = con.prepareStatement(sStmt);
+					ps.setString(1, message[1]);
+					ps.setString(2, "OUT");
+					ps.setInt(3, 0); //This needs to be changed later to get the user rank.
+					ps.executeUpdate();
+				}
 			}
 			
 			rs.close();
