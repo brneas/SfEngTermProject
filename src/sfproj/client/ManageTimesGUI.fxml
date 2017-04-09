@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="479.0" prefWidth="478.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="manEmpTime" layoutX="14.0" layoutY="14.0" text="Manage Employee Times">
@@ -20,8 +19,8 @@
           <TableColumn fx:id="clockIn" prefWidth="95.0" text="Clock In" />
           <TableColumn fx:id="clockOut" prefWidth="88.0" text="Clock Out" />
             <TableColumn fx:id="clockDate" prefWidth="112.0" text="Date" />
-            <TableColumn fx:id="clockPay" prefWidth="81.0" text="Paid" />
-            <TableColumn fx:id="tHours" text="Total Hours" />
+            <TableColumn fx:id="clockPay" prefWidth="81.0" text="Total Hours" />
+            <TableColumn fx:id="tHours" text="Paid" />
         </columns>
       </TableView>
    </children>

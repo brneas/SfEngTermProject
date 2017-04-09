@@ -92,6 +92,8 @@ public class ManageEmployees {
 	
 	public void manageTimes(){
 		try {
+			cnh = new ClientNetHandler(serverIPA, port);
+			cnh.sendToServer("RequestTimes|"+empList.getSelectionModel().getSelectedItem().getName());
 			ManageEmployeeTimes manTimes  = new ManageEmployeeTimes(manageEmployeesStage);
 			Stage manageEmpTimesStage = new Stage();
 			FXMLLoader fxml = new FXMLLoader(ManageEmployeeTimes.class.getResource("ManageTimesGUI.fxml"));

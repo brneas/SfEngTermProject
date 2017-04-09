@@ -4,6 +4,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JOptionPane;
 
@@ -57,8 +63,59 @@ public class ClientNetHandler extends AbstractClient{
 				JOptionPane.showMessageDialog(null, "You are already clocked in.", "Clock In Error " + "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
 			else if(message[1].equals("2")){//Already clocked out
-				JOptionPane.showMessageDialog(null, "You are already clocked out.", "Clock In Error " + "Error", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "You are already clocked out.", "Clock Out Error " + "Error", JOptionPane.INFORMATION_MESSAGE);
 			}
+		}
+		else if(message[0].equals("TimeList")){
+			try {
+				DecimalFormat df = new DecimalFormat("#.00");
+				Time in;
+				Time out;
+				long timeDiff;
+				double hours;
+				double pay;
+				writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/timeList.txt")));
+				int i=1;
+				if(message[1].equals("IN")){
+					i = 5;
+				}
+				while(i<message.length-1){
+					in = Time.valueOf(message[i+6]);
+					out = Time.valueOf(message[i+2]);
+					timeDiff = (out.getTime()-in.getTime());
+					hours  = (double)timeDiff/1000/60/60;
+					pay = Double.parseDouble(message[i+3]);
+					System.out.println("Wrote: " + message[i+6] + "|" + message[i+2] + "|" + message[i+5] + "|" + df.format(hours) + "|" + df.format(hours*pay));
+					writer.write(message[i+6] + "|" + message[i+2] + "|" + message[i+5] + "|" + df.format(hours) + "|" + df.format(hours*pay));
+					i = i+8;
+					writer.newLine();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			/*try {
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+				java.util.Date date;
+				writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/timeList.txt")));
+				int i=1;
+				if(message[1].equals("IN")){
+					i = 4;
+				}
+				while(i<message.length-1){
+					try {
+						date = simpleDateFormat.parse(message[i+4]);
+						System.out.println(date + "|" + message[i+1]);
+						i = i+6;
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
 		}
 		
 		try {

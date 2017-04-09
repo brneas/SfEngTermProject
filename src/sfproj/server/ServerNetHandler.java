@@ -80,16 +80,6 @@ public class ServerNetHandler extends AbstractServer{
 					System.out.println("Send to client error");
 				}
 			}
-			else if(message[0].equals("Login")){
-				//client.setName(message[1]);
-				//System.out.println(client.getName());
-				try {
-					client.sendToClient("Test");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
 			else if(message[0].equals("ClockIn")){
 				String type = "";
 				String getClockStmt = "SELECT * FROM clock WHERE eID=? ORDER BY theTime DESC LIMIT 1";
@@ -140,6 +130,23 @@ public class ServerNetHandler extends AbstractServer{
 					ps.setString(2, "OUT");
 					ps.setInt(3, 0); //This needs to be changed later to get the user rank.
 					ps.executeUpdate();
+				}
+			}
+			else if(message[0].equals("RequestTimes")){
+				sStmt = "SELECT * FROM clockStuff WHERE eId=? ORDER BY Date, Time DESC";
+				ps = con.prepareStatement(sStmt);
+				ps.setString(1, message[1]);
+				rs = ps.executeQuery();
+				String tempString = "TimeList|";
+				while(rs.next()){
+					tempString = tempString + rs.getString("type") + "|" + rs.getDate("Date") + "|" + rs.getTime("Time") + "|" + rs.getDouble("pay") + "|";
+				}
+				try {
+					client.sendToClient(tempString);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.out.println("Send to client error");
 				}
 			}
 			

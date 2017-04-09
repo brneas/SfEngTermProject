@@ -2,3 +2,4 @@ sam|2|15.0
 wada|2|22.0
 John Smith|Test Add|12.99
 Jane Doe|Test 3|29.99
+Delview|null|15.0
