@@ -1,6 +1,7 @@
 package sfproj.client;
 
 public class Employee {
+	private int ID;
 	private String Name;
 	private String Department;
 	private String Rank;
@@ -10,12 +11,21 @@ public class Employee {
 	public Employee(){
 		
 	}
-	public Employee(String Name, String Department, String Rank, String HPay, String WPay){
+	public Employee(int ID, String Name, String Department, String Rank, String HPay, String WPay){
+		this.ID = ID;
 		this.Name = Name;
 		this.Department = Department;
 		this.Rank = Rank;
 		this.HPay = HPay;
 		this.WPay = WPay;
+	}
+	
+	public int getID() {
+		return ID;
+	}
+	
+	public void setID(int id) {
+		ID = id;
 	}
 
 	public String getName() {

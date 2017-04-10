@@ -41,14 +41,14 @@ public class ManageEmployees {
 		empRank.setCellValueFactory(new PropertyValueFactory<Employee, String>("Rank"));
 		empHPay.setCellValueFactory(new PropertyValueFactory<Employee, String>("HPay"));
 		empWPay.setCellValueFactory(new PropertyValueFactory<Employee, String>("WPay"));
-		employeeData.add(new Employee("John Smith", "Department 1", "Employee", "2.25", "50.00"));
-		employeeData.add(new Employee("Jane Doe", "Department 3", "Employee", "9.95", "497.35"));
-		employeeData.add(new Employee("Shane Queen", "Department 1", "Manager", "20.00", "800.00"));
-		employeeData.add(new Employee("Tylar Rhoades", "Department 2", "Manager", "10.00", "400.00"));
-		employeeData.add(new Employee("Oles Uri", "Department 1", "Employee", "1.50", "108.00"));
-		employeeData.add(new Employee("Branislava Hesiodos", "Department 1", "Employee", "3.50", "70.50"));
-		employeeData.add(new Employee("Renee Suzy", "Department 3", "Manager", "15.00", "600.00"));
-		employeeData.add(new Employee("Merlyn Lavonne", "Department 1", "Employee", "2.50", "25.50"));
+		employeeData.add(new Employee(1234,"John Smith", "Department 1", "Employee", "2.25", "50.00"));
+		employeeData.add(new Employee(5678,"Jane Doe", "Department 3", "Employee", "9.95", "497.35"));
+		employeeData.add(new Employee(9012,"Shane Queen", "Department 1", "Manager", "20.00", "800.00"));
+		employeeData.add(new Employee(3456,"Tylar Rhoades", "Department 2", "Manager", "10.00", "400.00"));
+		employeeData.add(new Employee(7890,"Oles Uri", "Department 1", "Employee", "1.50", "108.00"));
+		employeeData.add(new Employee(1123,"Branislava Hesiodos", "Department 1", "Employee", "3.50", "70.50"));
+		employeeData.add(new Employee(4567,"Renee Suzy", "Department 3", "Manager", "15.00", "600.00"));
+		employeeData.add(new Employee(7789,"Merlyn Lavonne", "Department 1", "Employee", "2.50", "25.50"));
 		empList.setItems(employeeData);
 	}
 	
