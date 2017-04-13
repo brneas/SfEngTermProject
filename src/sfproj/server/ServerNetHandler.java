@@ -1,5 +1,6 @@
 package sfproj.server;
 
+import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -37,7 +38,7 @@ public class ServerNetHandler extends AbstractServer{
 			String message[] = ((String) msg).split("\\|");
 			//Need to change this to a switch statement probably
 			if(message[0].equals("AddEmployee")){
-				sStmt = "INSERT INTO employee(name,departmentName,pay) VALUES(?,?,?)";
+				sStmt = "INSERT INTO employee(name,departmentID,pay) VALUES(?,?,?)";
 				ps = con.prepareStatement(sStmt);
 				ps.setString(1, message[1]);
 				ps.setString(2, message[2]);
@@ -55,7 +56,7 @@ public class ServerNetHandler extends AbstractServer{
 				rs = stmt.executeQuery(sStmt);
 				String tempString = "DepartmentList|";
 				while(rs.next()){
-					tempString = tempString + rs.getString(2) + "|15|";
+					tempString = tempString + rs.getString(1) + "|" + rs.getString(2) + "|15|";
 				}
 				try {
 					client.sendToClient(tempString);
@@ -149,6 +150,27 @@ public class ServerNetHandler extends AbstractServer{
 					System.out.println("Send to client error");
 				}
 			}
+			else if(message[0].equals("Login")){
+				String userId = message[1].substring(3, 7);
+				String deptId = message[1].substring(0, 3);
+				System.out.println(userId + " | " + deptId);
+				String name ="";
+				sStmt = "SELECT * FROM employee WHERE id=?";
+				ps = con.prepareStatement(sStmt);
+				ps.setString(1, userId);
+				//ps.setString(2, deptId);
+				rs = ps.executeQuery();
+				while(rs.next()){
+					name = rs.getString("name");
+					//Get rank here too
+				}
+				if(name.isEmpty()){
+					client.sendToClient("Login|Fail");
+				}
+				else{
+					client.sendToClient("Login|Success");
+				}
+			}
 			
 			rs.close();
 			stmt.close();
@@ -157,6 +179,9 @@ public class ServerNetHandler extends AbstractServer{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Db Error");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

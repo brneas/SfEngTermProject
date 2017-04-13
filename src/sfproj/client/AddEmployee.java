@@ -43,7 +43,7 @@ public class AddEmployee {
 			reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/departmentList.txt")));
 			while((line = reader.readLine()) != null){
 				String[] deptLines = ((String) line).split("\\|");
-				empDept.add(deptLines[0]);
+				empDept.add(deptLines[1]);
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -65,8 +65,17 @@ public class AddEmployee {
 	
 	public void addEmployee(){
 		try{
-			//cnh.sendToServer("Add Employee: "+ employeeName.getText() + ", " + employeeDept.getValue() + ", " + payPerHour.getText());
-			cnh.sendToServer("AddEmployee|"+ employeeName.getText() + "|" + employeeDept.getValue() + "|" + payPerHour.getText());
+			String line;
+			BufferedReader reader;
+			String deptId = "";
+			reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/departmentList.txt")));
+			while((line = reader.readLine()) != null){
+				String[] deptLines = ((String) line).split("\\|");
+				if(deptLines[1].equals(employeeDept.getValue())){
+					deptId = deptLines[0];
+				}
+			}
+			cnh.sendToServer("AddEmployee|"+ employeeName.getText() + "|" + deptId + "|" + payPerHour.getText());
 			addEmployeesStage.close();
 		} catch (UnknownHostException e) {
 			// TODO

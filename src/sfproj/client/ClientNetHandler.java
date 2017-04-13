@@ -33,8 +33,8 @@ public class ClientNetHandler extends AbstractClient{
 				writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/departmentList.txt")));
 				for(int i=1; i<message.length-1;){
 					writer.write(message[i] + "|" + message[i+1]);
-					System.out.println("Wrote: " + message[i] + "|" + message[i+1]);
-					i = i+2;
+					System.out.println("Wrote: " + message[i] + "|" + message[i+1] + "|" + message[i+2]);
+					i = i+3;
 					writer.newLine();
 				}
 				writer.flush();
@@ -94,28 +94,16 @@ public class ClientNetHandler extends AbstractClient{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			/*try {
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-				java.util.Date date;
-				writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/timeList.txt")));
-				int i=1;
-				if(message[1].equals("IN")){
-					i = 4;
-				}
-				while(i<message.length-1){
-					try {
-						date = simpleDateFormat.parse(message[i+4]);
-						System.out.println(date + "|" + message[i+1]);
-						i = i+6;
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
+		}
+		else if(message[0].equals("Login")){
+			try {
+				writer = writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/login.txt")));
+				writer.write(message[1]);
+				writer.flush();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}*/
+			}
 		}
 		
 		try {
