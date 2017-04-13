@@ -74,6 +74,8 @@ public class ManageEmployees {
 	
 	public void addEmployee(){
 		try {
+			cnh.sendToServer("RequestDepartment");
+			cnh.sendToServer("RequestRank");
 			AddEmployee addEmp  = new AddEmployee(manageEmployeesStage);
 			Stage manageEmployeesStage = new Stage();
 			FXMLLoader fxml = new FXMLLoader(AddEmployee.class.getResource("AddEmployeeGui.fxml"));

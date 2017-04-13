@@ -34,9 +34,12 @@ public class AddEmployee {
 	@FXML TextField employeeName;
 	@FXML TextField payPerHour;
 	@FXML ComboBox<String> employeeDept;
+	@FXML ComboBox<String> rankBox;
+	@FXML Label rankLbl;
 	@FXML
 	private void initialize(){
 		ObservableList<String> empDept = FXCollections.observableArrayList(); 
+		ObservableList<String> empRank = FXCollections.observableArrayList(); 
 		try {
 			String line;
 			BufferedReader reader;
@@ -44,6 +47,11 @@ public class AddEmployee {
 			while((line = reader.readLine()) != null){
 				String[] deptLines = ((String) line).split("\\|");
 				empDept.add(deptLines[1]);
+			}
+			reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/rankList.txt")));
+			while((line = reader.readLine()) != null){
+				String[] deptLines = ((String) line).split("\\|");
+				empRank.add(deptLines[1]);
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -53,6 +61,7 @@ public class AddEmployee {
 			e.printStackTrace();
 		}
 		employeeDept.setItems(empDept);
+		rankBox.setItems(empRank);
 	}
 	
 	private Stage addEmployeesStage;
@@ -60,7 +69,6 @@ public class AddEmployee {
 	public AddEmployee(Stage addEmployeesStage) throws IOException{
 		this.addEmployeesStage = addEmployeesStage;
 		cnh = new ClientNetHandler(serverIPA, port);
-		cnh.sendToServer("RequestDepartment");
 	}
 	
 	public void addEmployee(){
@@ -68,6 +76,7 @@ public class AddEmployee {
 			String line;
 			BufferedReader reader;
 			String deptId = "";
+			String rankID = "";
 			reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/departmentList.txt")));
 			while((line = reader.readLine()) != null){
 				String[] deptLines = ((String) line).split("\\|");
@@ -75,8 +84,15 @@ public class AddEmployee {
 					deptId = deptLines[0];
 				}
 			}
-			cnh.sendToServer("AddEmployee|"+ employeeName.getText() + "|" + deptId + "|" + payPerHour.getText());
-			addEmployeesStage.close();
+			reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/rankList.txt")));
+			while((line = reader.readLine()) != null){
+				String[] rankLines = ((String) line).split("\\|");
+				if(rankLines[1].equals(rankBox.getValue())){
+					rankID = rankLines[0];
+				}
+			}
+			cnh.sendToServer("AddEmployee|"+ employeeName.getText() + "|" + deptId + "|" + payPerHour.getText() + "|" + rankID);
+			//addEmployeesStage.close();
 		} catch (UnknownHostException e) {
 			// TODO
 			e.printStackTrace();

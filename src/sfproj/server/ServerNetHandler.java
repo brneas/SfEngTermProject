@@ -38,11 +38,12 @@ public class ServerNetHandler extends AbstractServer{
 			String message[] = ((String) msg).split("\\|");
 			//Need to change this to a switch statement probably
 			if(message[0].equals("AddEmployee")){
-				sStmt = "INSERT INTO employee(name,departmentID,pay) VALUES(?,?,?)";
+				sStmt = "INSERT INTO employee(name,departmentID,pay,rank) VALUES(?,?,?,?)";
 				ps = con.prepareStatement(sStmt);
 				ps.setString(1, message[1]);
 				ps.setString(2, message[2]);
 				ps.setFloat(3, Float.parseFloat(message[3]));
+				ps.setString(4, message[4]);
 				ps.executeUpdate();
 			}
 			else if(message[0].equals("AddDepartment")){
@@ -72,6 +73,21 @@ public class ServerNetHandler extends AbstractServer{
 				String tempString = "EmployeeList|";
 				while(rs.next()){
 					tempString = tempString + rs.getString(2) + "|" + rs.getString(3) + "|" + rs.getDouble(4) + "|";
+				}
+				try {
+					client.sendToClient(tempString);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.out.println("Send to client error");
+				}
+			}
+			else if(message[0].equals("RequestRank")){
+				sStmt = "SELECT * FROM ranks";
+				rs = stmt.executeQuery(sStmt);
+				String tempString = "RankList|";
+				while(rs.next()){
+					tempString = tempString + rs.getString(1) + "|" + rs.getString(2) + "|";
 				}
 				try {
 					client.sendToClient(tempString);

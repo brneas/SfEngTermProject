@@ -58,6 +58,21 @@ public class ClientNetHandler extends AbstractClient{
 				e.printStackTrace();
 			}
 		}
+		else if(message[0].equals("RankList")){
+			try {
+				writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/rankList.txt")));
+				for(int i=1; i<message.length-1;){
+					writer.write(message[i] + "|" + message[i+1]);
+					System.out.println("Wrote: " + message[i] + "|" + message[i+1]);
+					i = i+2;
+					writer.newLine();
+				}
+				writer.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		else if(message[0].equals("Error")){
 			if(message[1].equals("1")){//Already clocked In
 				JOptionPane.showMessageDialog(null, "You are already clocked in.", "Clock In Error " + "Error", JOptionPane.INFORMATION_MESSAGE);
