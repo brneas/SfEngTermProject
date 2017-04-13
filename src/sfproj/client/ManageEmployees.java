@@ -45,8 +45,6 @@ public class ManageEmployees {
 	@FXML
     private void initialize() {
 		try {
-			cnh = new ClientNetHandler(serverIPA, port);
-			//cnh.sendToServer("RequestEmployee");
 			BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/employeeList.txt")));
 			String line;
 			while((line = reader.readLine()) != null){
@@ -70,6 +68,12 @@ public class ManageEmployees {
 	
 	public ManageEmployees(Stage manageEmployeesStage){
 		this.manageEmployeesStage = manageEmployeesStage;
+		try {
+			cnh = new ClientNetHandler(serverIPA, port);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void addEmployee(){
