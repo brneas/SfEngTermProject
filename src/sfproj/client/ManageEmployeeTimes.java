@@ -31,14 +31,22 @@ public class ManageEmployeeTimes {
 	@FXML TableColumn<timeList, String> clockDate;
 	@FXML TableColumn<timeList, String> clockPay;
 	@FXML TableColumn<timeList, String> tHours;
+	@FXML TableColumn<timeList, String> callBack;
 	@FXML
 	private void initialize() {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/timeList.txt")));
 			String line;
+			String callback = "False";
 			while((line = reader.readLine()) != null){
 				String[] empLines = ((String) line).split("\\|");
-				employeeTimes.add(new timeList(empLines[0], empLines[1], empLines[2], empLines[3], empLines[4]));
+				if(empLines[5].equals("1")){
+					callback = "True";
+				}
+				else{
+					callback = "False";
+				}
+				employeeTimes.add(new timeList(empLines[0], empLines[1], empLines[2], empLines[3], empLines[4], callback));
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -50,6 +58,7 @@ public class ManageEmployeeTimes {
 		clockDate.setCellValueFactory(new PropertyValueFactory<timeList, String>("date"));
 		clockPay.setCellValueFactory(new PropertyValueFactory<timeList, String>("hoursWorked"));
 		tHours.setCellValueFactory(new PropertyValueFactory<timeList, String>("totalPay"));
+		callBack.setCellValueFactory(new PropertyValueFactory<timeList, String>("callBack"));
 		empTimes.setItems(employeeTimes);
 	}
 	

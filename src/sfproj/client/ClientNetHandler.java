@@ -47,9 +47,9 @@ public class ClientNetHandler extends AbstractClient{
 			try {
 				writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/employeeList.txt")));
 				for(int i=1; i<message.length-1;){
-					writer.write(message[i] + "|" + message[i+1] + "|" + message[i+2]);
-					System.out.println("Wrote: " + message[i] + "|" + message[i+1] + "|" + message[i+2]);
-					i = i+3;
+					writer.write(message[i] + "|" + message[i+1] + "|" + message[i+2] + "|" + message[i+3]);
+					System.out.println("Wrote: " + message[i] + "|" + message[i+1] + "|" + message[i+2] + "|" + message[i+3]);
+					i = i+4;
 					writer.newLine();
 				}
 				writer.flush();
@@ -95,14 +95,14 @@ public class ClientNetHandler extends AbstractClient{
 					i = 5;
 				}
 				while(i<message.length-1){
-					in = Time.valueOf(message[i+6]);
+					in = Time.valueOf(message[i+7]);
 					out = Time.valueOf(message[i+2]);
 					timeDiff = (out.getTime()-in.getTime());
 					hours  = (double)timeDiff/1000/60/60;
 					pay = Double.parseDouble(message[i+3]);
-					System.out.println("Wrote: " + message[i+6] + "|" + message[i+2] + "|" + message[i+5] + "|" + df.format(hours) + "|" + df.format(hours*pay));
-					writer.write(message[i+6] + "|" + message[i+2] + "|" + message[i+5] + "|" + df.format(hours) + "|" + df.format(hours*pay));
-					i = i+8;
+					System.out.println("Wrote: " + message[i+7] + "|" + message[i+2] + "|" + message[i+6] + "|" + df.format(hours) + "|" + df.format(hours*pay)+ "|" + message[i+9]);
+					writer.write(message[i+7] + "|" + message[i+2] + "|" + message[i+6] + "|" + df.format(hours) + "|" + df.format(hours*pay)+ "|" + message[i+9]);
+					i = i+10;
 					writer.newLine();
 				}
 			} catch (IOException e) {

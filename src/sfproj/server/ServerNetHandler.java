@@ -82,7 +82,7 @@ public class ServerNetHandler extends AbstractServer{
 				rs = stmt.executeQuery(sStmt);
 				String tempString = "EmployeeList|";
 				while(rs.next()){
-					tempString = tempString + rs.getString(2) + "|" + rs.getInt(3) + "|" + rs.getDouble(4) + "|";
+					tempString = tempString + rs.getString(1) + "|" + rs.getString(2) + "|" + rs.getInt(3) + "|" + rs.getDouble(4) + "|";
 				}
 				try {
 					client.sendToClient(tempString);
@@ -108,10 +108,11 @@ public class ServerNetHandler extends AbstractServer{
 				}
 			}
 			else if(message[0].equals("ClockIn")){
+				String userId = message[1].substring(3, 7);
 				String type = "";
 				String getClockStmt = "SELECT * FROM clock WHERE eID=? ORDER BY theTime DESC LIMIT 1";
 				ps = con.prepareStatement(getClockStmt);
-				ps.setString(1, message[1]);
+				ps.setInt(1, Integer.parseInt(userId));
 				rs = ps.executeQuery();
 				while(rs.next()){
 					type = rs.getString("type");
@@ -127,17 +128,18 @@ public class ServerNetHandler extends AbstractServer{
 				else{
 					sStmt = "INSERT INTO clock(eId,type,rank) VALUES(?,?,?)";
 					ps = con.prepareStatement(sStmt);
-					ps.setString(1, message[1]);
+					ps.setInt(1, Integer.parseInt(userId));
 					ps.setString(2, "IN");
 					ps.setInt(3, Integer.parseInt(message[2])); 
 					ps.executeUpdate();
 				}
 			}
 			else if(message[0].equals("ClockOut")){
+				String userId = message[1].substring(3, 7);
 				String type = "";
 				String getClockStmt = "SELECT * FROM clock WHERE eID=? ORDER BY theTime DESC LIMIT 1";
 				ps = con.prepareStatement(getClockStmt);
-				ps.setString(1, message[1]);
+				ps.setInt(1, Integer.parseInt(userId));
 				rs = ps.executeQuery();
 				while(rs.next()){
 					type = rs.getString("type");
@@ -153,7 +155,7 @@ public class ServerNetHandler extends AbstractServer{
 				else{
 					sStmt = "INSERT INTO clock(eId,type,rank) VALUES(?,?,?)";
 					ps = con.prepareStatement(sStmt);
-					ps.setString(1, message[1]);
+					ps.setInt(1, Integer.parseInt(userId));
 					ps.setString(2, "OUT");
 					ps.setInt(3, Integer.parseInt(message[2])); 
 					ps.executeUpdate();
@@ -162,11 +164,11 @@ public class ServerNetHandler extends AbstractServer{
 			else if(message[0].equals("RequestTimes")){
 				sStmt = "SELECT * FROM clockStuff WHERE eId=? ORDER BY Date, Time DESC";
 				ps = con.prepareStatement(sStmt);
-				ps.setString(1, message[1]);
+				ps.setInt(1, Integer.parseInt(message[1]));
 				rs = ps.executeQuery();
 				String tempString = "TimeList|";
 				while(rs.next()){
-					tempString = tempString + rs.getString("type") + "|" + rs.getDate("Date") + "|" + rs.getTime("Time") + "|" + rs.getDouble("pay") + "|";
+					tempString = tempString + rs.getString("type") + "|" + rs.getDate("Date") + "|" + rs.getTime("Time") + "|" + rs.getDouble("pay") + "|" + rs.getInt("callBack") + "|";
 				}
 				try {
 					client.sendToClient(tempString);

@@ -8,6 +8,7 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,6 +38,7 @@ public class ManageEmployees {
 	@FXML Button manageTimes;
 	@FXML TableView<Employee> empList;
 	@FXML Label empLbl;
+	@FXML TableColumn<Employee, String> empId;
 	@FXML TableColumn<Employee, String> empName;
 	@FXML TableColumn<Employee, String> deptName;
 	@FXML TableColumn<Employee, String> empRank;
@@ -49,13 +51,13 @@ public class ManageEmployees {
 			String line;
 			while((line = reader.readLine()) != null){
 				String[] empLines = ((String) line).split("\\|");
-				employeeData.add(new Employee(empLines[0], empLines[1], "Employee", empLines[2], "100"));
+				employeeData.add(new Employee(empLines[0], empLines[1], empLines[2], "Employee", empLines[3], "100"));
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		empId.setCellValueFactory(new PropertyValueFactory<Employee, String>("ID"));
 		empName.setCellValueFactory(new PropertyValueFactory<Employee, String>("Name"));
 		deptName.setCellValueFactory(new PropertyValueFactory<Employee, String>("Department"));
 		empRank.setCellValueFactory(new PropertyValueFactory<Employee, String>("Rank"));
@@ -99,7 +101,13 @@ public class ManageEmployees {
 	public void manageTimes(){
 		try {
 			cnh = new ClientNetHandler(serverIPA, port);
-			cnh.sendToServer("RequestTimes|"+empList.getSelectionModel().getSelectedItem().getName());
+			cnh.sendToServer("RequestTimes|"+empList.getSelectionModel().getSelectedItem().getID());
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			ManageEmployeeTimes manTimes  = new ManageEmployeeTimes(manageEmployeesStage);
 			Stage manageEmpTimesStage = new Stage();
 			FXMLLoader fxml = new FXMLLoader(ManageEmployeeTimes.class.getResource("ManageTimesGUI.fxml"));

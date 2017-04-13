@@ -6,16 +6,18 @@ public class timeList {
 	private String date;
 	private String hoursWorked;
 	private String totalPay;
+	private String callBack;
 	
 	public timeList(){
 		//I hate java so much
 	}
-	public timeList(String clockIn, String clockOut, String date, String hoursWorked, String totalPay){
+	public timeList(String clockIn, String clockOut, String date, String hoursWorked, String totalPay, String callBack){
 		this.setClockIn(clockIn);
 		this.setClockOut(clockOut);
 		this.setDate(date);
 		this.setHoursWorked(hoursWorked);
 		this.setTotalPay(totalPay);
+		this.callBack = callBack;
 	}
 	public String getClockIn() {
 		return clockIn;
@@ -46,5 +48,11 @@ public class timeList {
 	}
 	public void setTotalPay(String totalPay) {
 		this.totalPay = totalPay;
+	}
+	public String getCallBack() {
+		return callBack;
+	}
+	public void setCallBack(String callBack) {
+		this.callBack = callBack;
 	}
 }
