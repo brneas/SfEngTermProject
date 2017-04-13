@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -29,6 +30,7 @@ public class ClientGui {
 	@FXML Button clockIn;
 	@FXML Button clockOut;
 	@FXML Label introMessage;
+	@FXML CheckBox callBack;
 	@FXML
 	private void initialize(){
 		String line;
@@ -106,10 +108,18 @@ public class ClientGui {
 	
 	public void clockIn(){
 		try {
+			Boolean isCallBack = callBack.isSelected();
+			String rank = "";
+			if(isCallBack){
+				rank = "1";
+			}
+			else{
+				rank = "0";
+			}
 			BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/user.txt")));
 			String username = reader.readLine();
 			cnh = new ClientNetHandler(serverIPA, port);
-			cnh.sendToServer("ClockIn|"+username);
+			cnh.sendToServer("ClockIn|"+username+"|"+rank);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -118,10 +128,18 @@ public class ClientGui {
 	
 	public void clockOut(){
 		try {
+			Boolean isCallBack = callBack.isSelected();
+			String rank = "";
+			if(isCallBack){
+				rank = "1";
+			}
+			else{
+				rank = "0";
+			}
 			BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/user.txt")));
 			String username = reader.readLine();
 			cnh = new ClientNetHandler(serverIPA, port);
-			cnh.sendToServer("ClockOut|"+username);
+			cnh.sendToServer("ClockOut|"+username+"|"+rank);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

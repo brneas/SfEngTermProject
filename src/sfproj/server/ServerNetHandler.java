@@ -129,7 +129,7 @@ public class ServerNetHandler extends AbstractServer{
 					ps = con.prepareStatement(sStmt);
 					ps.setString(1, message[1]);
 					ps.setString(2, "IN");
-					ps.setInt(3, 0); 
+					ps.setInt(3, Integer.parseInt(message[2])); 
 					ps.executeUpdate();
 				}
 			}
@@ -155,7 +155,7 @@ public class ServerNetHandler extends AbstractServer{
 					ps = con.prepareStatement(sStmt);
 					ps.setString(1, message[1]);
 					ps.setString(2, "OUT");
-					ps.setInt(3, 0); //This needs to be changed later to get the user rank.
+					ps.setInt(3, Integer.parseInt(message[2])); 
 					ps.executeUpdate();
 				}
 			}

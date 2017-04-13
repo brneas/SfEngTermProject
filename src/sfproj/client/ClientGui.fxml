@@ -5,12 +5,13 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="175.0" spacing="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="219.0" prefWidth="175.0" spacing="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="introMessage" text="Welcome" textAlignment="CENTER" wrapText="true" />
       <Button fx:id="clockIn" mnemonicParsing="false" onAction="#clockIn" text="Clock In" />
       <Button fx:id="clockOut" mnemonicParsing="false" onAction="#clockOut" text="Clock Out" />
-      <MenuButton fx:id="managerTools" mnemonicParsing="false" text="Manager Tools" visible="false">
+      <CheckBox fx:id="callBack" mnemonicParsing="false" text="Call Back" />
+      <MenuButton fx:id="managerTools" mnemonicParsing="false" text="Manager Tools">
         <items>
           <MenuItem fx:id="genAccRep" mnemonicParsing="false" text="Generate Accounting Report" />
             <MenuItem mnemonicParsing="false" onAction="#manageEmployees" text="Manage Employees" />
