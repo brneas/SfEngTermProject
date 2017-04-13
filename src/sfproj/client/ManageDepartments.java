@@ -40,6 +40,7 @@ public class ManageDepartments {
 	@FXML Label deptLabel;
 	@FXML TableColumn<Department, String> nameCol;
 	@FXML TableColumn<Department, String> empCol;
+	@FXML TableColumn<Department, String> typeCol;
 	@FXML
     private void initialize() {
 		try {
@@ -49,7 +50,7 @@ public class ManageDepartments {
 			String line;
 			while((line = reader.readLine()) != null){
 				String[] deptLines = ((String) line).split("\\|");
-				departmentData.add(new Department(deptLines[0], deptLines[1]));
+				departmentData.add(new Department(deptLines[1], deptLines[2], deptLines[3]));
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -58,6 +59,7 @@ public class ManageDepartments {
 		}
 		nameCol.setCellValueFactory(new PropertyValueFactory<Department, String>("DepartmentName"));
 		empCol.setCellValueFactory(new PropertyValueFactory<Department, String>("EmployeeNum"));
+		typeCol.setCellValueFactory(new PropertyValueFactory<Department, String>("Type"));
 		deptList.setItems(departmentData);
 	}
 	

@@ -5,10 +5,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="122.0" prefWidth="240.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="161.0" prefWidth="240.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="departmentName" layoutX="14.0" layoutY="33.0" text="Name" />
       <TextField fx:id="deptName" layoutX="79.0" layoutY="29.0" promptText="Department Name" />
-      <Button fx:id="addDept" layoutX="68.0" layoutY="74.0" mnemonicParsing="false" onAction="#addDepartment" text="Add Department" />
+      <Button fx:id="addDept" layoutX="68.0" layoutY="116.0" mnemonicParsing="false" onAction="#addDepartment" text="Add Department" />
+      <Label fx:id="typeLbl" layoutX="14.0" layoutY="74.0" text="Type" />
+      <ComboBox fx:id="typeBox" layoutX="78.0" layoutY="70.0" prefWidth="150.0" promptText="Department Type" />
    </children>
 </Pane>

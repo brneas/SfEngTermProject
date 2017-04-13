@@ -32,9 +32,9 @@ public class ClientNetHandler extends AbstractClient{
 			try {
 				writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/departmentList.txt")));
 				for(int i=1; i<message.length-1;){
-					writer.write(message[i] + "|" + message[i+1]);
-					System.out.println("Wrote: " + message[i] + "|" + message[i+1] + "|" + message[i+2]);
-					i = i+3;
+					writer.write(message[i] + "|" + message[i+1] + "|" + message[i+2] + "|" + message[i+3]);
+					System.out.println("Wrote: " + message[i] + "|" + message[i+1] + "|" + message[i+2] + "|" + message[i+3]);
+					i = i+4;
 					writer.newLine();
 				}
 				writer.flush();

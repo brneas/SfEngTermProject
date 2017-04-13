@@ -47,17 +47,27 @@ public class ServerNetHandler extends AbstractServer{
 				ps.executeUpdate();
 			}
 			else if(message[0].equals("AddDepartment")){
-				sStmt = "INSERT INTO department(name) VALUES(?)";
+				sStmt = "INSERT INTO department(name,type) VALUES(?,?)";
 				ps = con.prepareStatement(sStmt);
 				ps.setString(1, message[1]);
+				ps.setString(2, message[2]);
 				ps.executeUpdate();
 			}
 			else if(message[0].equals("RequestDepartment")){
 				sStmt = "SELECT * FROM department";
 				rs = stmt.executeQuery(sStmt);
 				String tempString = "DepartmentList|";
+				ResultSet res;
+				int count = 0;
 				while(rs.next()){
-					tempString = tempString + rs.getString(1) + "|" + rs.getString(2) + "|15|";
+					sStmt = "SELECT Count(*) FROM employee WHERE departmentID=?";
+					ps = con.prepareStatement(sStmt);
+					ps.setString(1, rs.getString(1));
+					res = ps.executeQuery();
+					while(res.next()){
+						count = res.getInt(1);
+					}
+					tempString = tempString + rs.getString(1) + "|" + rs.getString(2) + "|" + count + "|"+ rs.getString("type") + "|";
 				}
 				try {
 					client.sendToClient(tempString);
