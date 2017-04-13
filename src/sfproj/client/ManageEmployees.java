@@ -46,7 +46,7 @@ public class ManageEmployees {
     private void initialize() {
 		try {
 			cnh = new ClientNetHandler(serverIPA, port);
-			cnh.sendToServer("RequestEmployee");
+			//cnh.sendToServer("RequestEmployee");
 			BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/employeeList.txt")));
 			String line;
 			while((line = reader.readLine()) != null){

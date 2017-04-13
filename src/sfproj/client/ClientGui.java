@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.concurrent.TimeUnit;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,11 +51,18 @@ public class ClientGui {
 
 	public ClientGui(Stage loginStage) throws IOException {
 		this.clientStage = loginStage;
+		cnh = new ClientNetHandler(serverIPA, port);
 	}
 	
 	public void manageDepartments(){
 		try {
-
+			cnh.sendToServer("RequestDepartment");
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			ManageDepartments manDepts  = new ManageDepartments(clientStage);
 			Stage ManageDepartments = new Stage();
 			FXMLLoader fxml = new FXMLLoader(ManageDepartments.class.getResource("ManageDepartmentsGui.fxml"));
@@ -73,7 +81,13 @@ public class ClientGui {
 	
 	public void manageEmployees(){
 		try {
-
+			cnh.sendToServer("RequestEmployee");
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			ManageEmployees manEmps  = new ManageEmployees(clientStage);
 			Stage ManageEmployees = new Stage();
 			FXMLLoader fxml = new FXMLLoader(ManageEmployees.class.getResource("ManageEmployeesGui.fxml"));

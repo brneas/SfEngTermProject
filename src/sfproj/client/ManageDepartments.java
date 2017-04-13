@@ -45,7 +45,7 @@ public class ManageDepartments {
     private void initialize() {
 		try {
 			cnh = new ClientNetHandler(serverIPA, port);
-			cnh.sendToServer("RequestDepartment");
+			//cnh.sendToServer("RequestDepartment");
 			BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/departmentList.txt")));
 			String line;
 			while((line = reader.readLine()) != null){
