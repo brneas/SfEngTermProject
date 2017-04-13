@@ -113,7 +113,7 @@ public class ClientNetHandler extends AbstractClient{
 		else if(message[0].equals("Login")){
 			try {
 				writer = writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/login.txt")));
-				writer.write(message[1]);
+				writer.write(message[1] + "|" + message[2]);
 				writer.flush();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

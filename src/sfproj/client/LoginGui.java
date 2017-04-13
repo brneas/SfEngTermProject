@@ -59,7 +59,8 @@ public class LoginGui {
 				TimeUnit.SECONDS.sleep(3);//To set login stuff
 				reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/login.txt")));
 				while((line = reader.readLine()) != null){
-					if(line.equals("Success")){
+					String[] loginLine = ((String) line).split("\\|");
+					if(loginLine[0].equals("Success")){
 						BufferedWriter writer = writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/user.txt")));
 						writer.write(usernameField.getText());
 						writer.flush();

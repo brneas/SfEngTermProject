@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 
@@ -23,9 +24,27 @@ public class ClientGui {
 	@FXML MenuItem genAccRep;
 	@FXML MenuItem manEmps;
 	@FXML MenuItem manDepts;
+	@FXML MenuButton managerTools;
 	@FXML Button clockIn;
 	@FXML Button clockOut;
 	@FXML Label introMessage;
+	@FXML
+	private void initialize(){
+		String line;
+		BufferedReader reader;
+		try {
+			reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/login.txt")));
+			while((line = reader.readLine()) != null){
+				String[] loginLine = ((String) line).split("\\|");
+				if(loginLine[1].equals("2")){
+					managerTools.setVisible(true);
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	private Stage clientStage;
 

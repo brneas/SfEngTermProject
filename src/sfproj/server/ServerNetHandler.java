@@ -171,6 +171,7 @@ public class ServerNetHandler extends AbstractServer{
 				String deptId = message[1].substring(0, 3);
 				System.out.println(userId + " | " + deptId);
 				String name ="";
+				String rank ="";
 				sStmt = "SELECT * FROM employee WHERE id=?";
 				ps = con.prepareStatement(sStmt);
 				ps.setString(1, userId);
@@ -178,13 +179,13 @@ public class ServerNetHandler extends AbstractServer{
 				rs = ps.executeQuery();
 				while(rs.next()){
 					name = rs.getString("name");
-					//Get rank here too
+					rank = rs.getString("rank");
 				}
 				if(name.isEmpty()){
 					client.sendToClient("Login|Fail");
 				}
 				else{
-					client.sendToClient("Login|Success");
+					client.sendToClient("Login|Success|" + rank);
 				}
 			}
 			
