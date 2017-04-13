@@ -82,7 +82,7 @@ public class ServerNetHandler extends AbstractServer{
 				rs = stmt.executeQuery(sStmt);
 				String tempString = "EmployeeList|";
 				while(rs.next()){
-					tempString = tempString + rs.getString(2) + "|" + rs.getString(3) + "|" + rs.getDouble(4) + "|";
+					tempString = tempString + rs.getString(2) + "|" + rs.getInt(3) + "|" + rs.getDouble(4) + "|";
 				}
 				try {
 					client.sendToClient(tempString);
@@ -178,14 +178,14 @@ public class ServerNetHandler extends AbstractServer{
 			}
 			else if(message[0].equals("Login")){
 				String userId = message[1].substring(3, 7);
-				String deptId = message[1].substring(0, 3);
+				int deptId = Integer.parseInt(message[1].substring(0, 3));
 				System.out.println(userId + " | " + deptId);
 				String name ="";
 				String rank ="";
-				sStmt = "SELECT * FROM employee WHERE id=?";
+				sStmt = "SELECT * FROM employee WHERE id=? AND departmentID=?";
 				ps = con.prepareStatement(sStmt);
 				ps.setString(1, userId);
-				//ps.setString(2, deptId);
+				ps.setInt(2, deptId);
 				rs = ps.executeQuery();
 				while(rs.next()){
 					name = rs.getString("name");
