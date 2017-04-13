@@ -39,14 +39,14 @@ public class ManageEmployeeTimes {
 			String line;
 			String callback = "False";
 			while((line = reader.readLine()) != null){
-				String[] empLines = ((String) line).split("\\|");
-				if(empLines[5].equals("1")){
+				String[] timeLines = ((String) line).split("\\|");
+				if(timeLines[5].equals("1")){
 					callback = "True";
 				}
 				else{
 					callback = "False";
 				}
-				employeeTimes.add(new timeList(empLines[0], empLines[1], empLines[2], empLines[3], empLines[4], callback));
+				employeeTimes.add(new timeList(timeLines[0], timeLines[1], timeLines[2], timeLines[3], timeLines[4], callback));
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

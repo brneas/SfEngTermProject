@@ -47,9 +47,9 @@ public class ClientNetHandler extends AbstractClient{
 			try {
 				writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/employeeList.txt")));
 				for(int i=1; i<message.length-1;){
-					writer.write(message[i] + "|" + message[i+1] + "|" + message[i+2] + "|" + message[i+3]);
-					System.out.println("Wrote: " + message[i] + "|" + message[i+1] + "|" + message[i+2] + "|" + message[i+3]);
-					i = i+4;
+					writer.write(message[i] + "|" + message[i+1] + "|" + message[i+2] + "|" + message[i+3] + "|" + message[i+4]);
+					System.out.println("Wrote: " + message[i] + "|" + message[i+1] + "|" + message[i+2] + "|" + message[i+3] + "|" + message[i+4]);
+					i = i+5;
 					writer.newLine();
 				}
 				writer.flush();
@@ -88,7 +88,7 @@ public class ClientNetHandler extends AbstractClient{
 				Time out;
 				long timeDiff;
 				double hours;
-				double pay;
+				double pay, totalPay;
 				writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/timeList.txt")));
 				int i=1;
 				if(message[1].equals("IN")){
@@ -100,8 +100,14 @@ public class ClientNetHandler extends AbstractClient{
 					timeDiff = (out.getTime()-in.getTime());
 					hours  = (double)timeDiff/1000/60/60;
 					pay = Double.parseDouble(message[i+3]);
-					System.out.println("Wrote: " + message[i+7] + "|" + message[i+2] + "|" + message[i+6] + "|" + df.format(hours) + "|" + df.format(hours*pay)+ "|" + message[i+9]);
-					writer.write(message[i+7] + "|" + message[i+2] + "|" + message[i+6] + "|" + df.format(hours) + "|" + df.format(hours*pay)+ "|" + message[i+9]);
+					if(message[i+9].equals("1") && hours < 4){
+						totalPay = 4*pay;
+					}
+					else{
+						totalPay = hours*pay;
+					}
+					System.out.println("Wrote: " + message[i+7] + "|" + message[i+2] + "|" + message[i+6] + "|" + df.format(hours) + "|" + df.format(totalPay)+ "|" + message[i+9]);
+					writer.write(message[i+7] + "|" + message[i+2] + "|" + message[i+6] + "|" + df.format(hours) + "|" + df.format(totalPay)+ "|" + message[i+9]);
 					i = i+10;
 					writer.newLine();
 				}

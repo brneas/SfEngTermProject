@@ -82,7 +82,7 @@ public class ServerNetHandler extends AbstractServer{
 				rs = stmt.executeQuery(sStmt);
 				String tempString = "EmployeeList|";
 				while(rs.next()){
-					tempString = tempString + rs.getString(1) + "|" + rs.getString(2) + "|" + rs.getInt(3) + "|" + rs.getDouble(4) + "|";
+					tempString = tempString + rs.getString(1) + "|" + rs.getString(2) + "|" + rs.getInt(3) + "|" + rs.getDouble(4) + "|"+ rs.getInt(5) + "|";
 				}
 				try {
 					client.sendToClient(tempString);

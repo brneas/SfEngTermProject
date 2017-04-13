@@ -48,10 +48,24 @@ public class ManageEmployees {
     private void initialize() {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/employeeList.txt")));
-			String line;
+			String line, lineAgain, lineAgainAgain, rankName = "", deptName = "";//Again Again Again Again Again Again Again Again
 			while((line = reader.readLine()) != null){
 				String[] empLines = ((String) line).split("\\|");
-				employeeData.add(new Employee(empLines[0], empLines[1], empLines[2], "Employee", empLines[3], "100"));
+				BufferedReader readerAgain = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/departmentList.txt")));
+				while((lineAgain = readerAgain.readLine()) != null){
+					String[] deptLines = ((String) lineAgain).split("\\|");
+					if(deptLines[0].equals(empLines[2])){
+						deptName = deptLines[1];
+					}
+				}
+				BufferedReader readerAgainAgain = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/rankList.txt")));
+				while((lineAgainAgain = readerAgainAgain.readLine()) != null){
+					String[] rankLines = ((String) lineAgainAgain).split("\\|");
+					if(rankLines[0].equals(empLines[4])){
+						rankName = rankLines[1];
+					}
+				}
+				employeeData.add(new Employee(empLines[0], empLines[1], deptName, rankName, empLines[3], "100"));
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
