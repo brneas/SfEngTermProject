@@ -20,7 +20,7 @@ public class Main extends Application{
 		LoginGui lg = new LoginGui(primaryStage);
 		fxml.setController(lg);
 		primaryStage.setScene(new Scene(fxml.load()));
-		lg.createHandlers();
+		//lg.createHandlers();
 		primaryStage.show();
 	}
 }

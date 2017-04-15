@@ -26,19 +26,22 @@ public class LoginGui {
 	private final String serverIPA = "localhost";
 	private final int port = 5000;
 	
-	@FXML
-	TextField usernameField;
-	@FXML
-	Button login;
+	@FXML TextField usernameField;
+	@FXML Button login;
 
 	private Stage loginStage;
 
 	public LoginGui(Stage loginStage) {
 		this.loginStage = loginStage;
-
+		try {
+			cnh = new ClientNetHandler(serverIPA, port);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	void createHandlers() {
+	/*void createHandlers() {
 		login.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -47,9 +50,9 @@ public class LoginGui {
 			}
 
 		});
-	}
+	}*/
 
-	private void login() {
+	public void login() {
 		try {
 			String line;
 			BufferedReader reader;
