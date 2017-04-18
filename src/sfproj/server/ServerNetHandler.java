@@ -162,7 +162,7 @@ public class ServerNetHandler extends AbstractServer{
 				}
 			}
 			else if(message[0].equals("RequestTimes")){
-				sStmt = "SELECT * FROM clockStuff WHERE eId=? ORDER BY Date, Time DESC";
+				sStmt = "SELECT * FROM clockStuff WHERE eId=? ORDER BY id DESC";
 				ps = con.prepareStatement(sStmt);
 				ps.setInt(1, Integer.parseInt(message[1]));
 				rs = ps.executeQuery();

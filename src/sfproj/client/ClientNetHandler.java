@@ -84,21 +84,36 @@ public class ClientNetHandler extends AbstractClient{
 		else if(message[0].equals("TimeList")){
 			try {
 				DecimalFormat df = new DecimalFormat("#.00");
-				Time in;
-				Time out;
+				Time in, out;
+				Date dateIn, dateOut, clockDate;
 				long timeDiff;
 				double hours;
 				double pay, totalPay;
 				writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/timeList.txt")));
 				int i=1;
 				if(message[1].equals("IN")){
-					i = 5;
+					i = 6;
 				}
 				while(i<message.length-1){
+					Time nextDate = Time.valueOf("22:30:00");
 					in = Time.valueOf(message[i+7]);
+					dateIn = Date.valueOf(message[i+6]);
 					out = Time.valueOf(message[i+2]);
+					dateOut = Date.valueOf(message[i+1]);
+					clockDate = dateIn;
 					timeDiff = (out.getTime()-in.getTime());
+					if(dateOut.after(dateIn)){
+						Time outMidnight = Time.valueOf("00:00:00");
+						Time inMidnight = Time.valueOf("24:00:00");
+						timeDiff = ((inMidnight.getTime() - in.getTime()) - (outMidnight.getTime() - out.getTime()));//What a bitch
+					}
+					if(in.after(nextDate)){
+						clockDate = dateOut;
+					}
 					hours  = (double)timeDiff/1000/60/60;
+					if(hours > 4.0){
+						hours = hours - 0.5;
+					}
 					pay = Double.parseDouble(message[i+3]);
 					if(message[i+9].equals("1") && hours < 4){
 						totalPay = 4*pay;
@@ -107,9 +122,10 @@ public class ClientNetHandler extends AbstractClient{
 						totalPay = hours*pay;
 					}
 					System.out.println("Wrote: " + message[i+7] + "|" + message[i+2] + "|" + message[i+6] + "|" + df.format(hours) + "|" + df.format(totalPay)+ "|" + message[i+9]);
-					writer.write(message[i+7] + "|" + message[i+2] + "|" + message[i+6] + "|" + df.format(hours) + "|" + df.format(totalPay)+ "|" + message[i+9]);
+					writer.write(message[i+7] + "|" + message[i+2] + "|" + clockDate + "|" + df.format(hours) + "|" + df.format(totalPay)+ "|" + message[i+9]);
 					i = i+10;
 					writer.newLine();
+					writer.flush();
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
