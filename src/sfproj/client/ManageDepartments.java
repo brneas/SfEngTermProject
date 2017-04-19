@@ -77,6 +77,7 @@ public class ManageDepartments {
 			fxml.setController(addDept);
 			addDepartmentStage.setScene(new Scene(fxml.load()));
 			addDepartmentStage.setTitle("Add Department");
+			addDepartmentStage.setResizable(false);
 			addDepartmentStage.show();
 		} catch (UnknownHostException e) {
 			// TODO

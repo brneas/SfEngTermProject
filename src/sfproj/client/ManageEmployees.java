@@ -5,8 +5,16 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.sql.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -48,7 +56,19 @@ public class ManageEmployees {
     private void initialize() {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/employeeList.txt")));
-			String line, lineAgain, lineAgainAgain, rankName = "", deptName = "";//Again Again Again Again Again Again Again Again
+			String line, lineAgain, lineAgainAgain, lineAgainAgainAgain, rankName = "", deptName = "";//Again Again Again Again Again Again Again Again
+			Double totalPay = 0.00;
+			Date mondayD, sundayD, clock;
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			DecimalFormat dcf = new DecimalFormat("#.00");
+			Calendar monday = GregorianCalendar.getInstance(Locale.US);
+			Calendar sunday = GregorianCalendar.getInstance(Locale.US);
+			monday.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+			sunday.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+			sunday.add(Calendar.DATE, 6);
+			System.out.println(df.format(monday.getTime()).toString() + " | " + df.format(sunday.getTime()).toString());
+			mondayD = Date.valueOf(df.format(monday.getTime()).toString());
+			sundayD = Date.valueOf(df.format(sunday.getTime()).toString());
 			while((line = reader.readLine()) != null){
 				String[] empLines = ((String) line).split("\\|");
 				BufferedReader readerAgain = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/departmentList.txt")));
@@ -65,7 +85,19 @@ public class ManageEmployees {
 						rankName = rankLines[1];
 					}
 				}
-				employeeData.add(new Employee(empLines[0], empLines[1], deptName, rankName, empLines[3], "100"));
+				BufferedReader readerAgainAgainAgain = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/fullTimeList.txt")));
+				while((lineAgainAgainAgain = readerAgainAgainAgain.readLine()) != null){
+					String[] payLines = ((String) lineAgainAgainAgain).split("\\|");
+					if(payLines[0].equals(empLines[0])){
+						clock = Date.valueOf(payLines[3]);
+						if(!mondayD.after(clock) && !sundayD.before(clock)){
+							totalPay = totalPay + Double.parseDouble(payLines[5]);
+						}
+						//totalPay = payLines[1];
+					}
+				}
+				employeeData.add(new Employee(empLines[0], empLines[1], deptName, rankName, empLines[3], dcf.format(totalPay)));
+				totalPay = 0.00;
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -102,6 +134,7 @@ public class ManageEmployees {
 			fxml.setController(addEmp);
 			manageEmployeesStage.setScene(new Scene(fxml.load()));
 			manageEmployeesStage.setTitle("Add Employee");
+			manageEmployeesStage.setResizable(false);
 			manageEmployeesStage.show();
 		} catch (UnknownHostException e) {
 			// TODO
@@ -128,6 +161,7 @@ public class ManageEmployees {
 			fxml.setController(manTimes);
 			manageEmpTimesStage.setScene(new Scene(fxml.load()));
 			manageEmpTimesStage.setTitle("Manage Times");
+			manageEmpTimesStage.setResizable(false);
 			manageEmpTimesStage.show();
 		} catch (UnknownHostException e) {
 			// TODO

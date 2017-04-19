@@ -178,6 +178,21 @@ public class ServerNetHandler extends AbstractServer{
 					System.out.println("Send to client error");
 				}
 			}
+			else if(message[0].equals("RequestFullTimes")){
+				sStmt = "SELECT * FROM clockStuff ORDER BY id DESC";
+				rs = stmt.executeQuery(sStmt);
+				String tempString = "FullTimeList|";
+				while(rs.next()){
+					tempString = tempString + rs.getInt("eId") + "|" + rs.getString("type") + "|" + rs.getDate("Date") + "|" + rs.getTime("Time") + "|" + rs.getDouble("pay") + "|" + rs.getInt("callBack") + "|";
+				}
+				try {
+					client.sendToClient(tempString);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.out.println("Send to client error");
+				}
+			}
 			else if(message[0].equals("Login")){
 				String userId = message[1].substring(3, 7);
 				int deptId = Integer.parseInt(message[1].substring(0, 3));

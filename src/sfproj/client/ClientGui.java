@@ -73,6 +73,7 @@ public class ClientGui {
 			fxml.setController(manDepts);
 			ManageDepartments.setScene(new Scene(fxml.load()));
 			ManageDepartments.setTitle("Manage Departments");
+			ManageDepartments.setResizable(false);
 			ManageDepartments.show();
 		} catch (UnknownHostException e) {
 			// TODO
@@ -86,6 +87,7 @@ public class ClientGui {
 	public void manageEmployees(){
 		try {
 			cnh.sendToServer("RequestEmployee");
+			cnh.sendToServer("RequestFullTimes");
 			try {
 				TimeUnit.SECONDS.sleep(1);
 			} catch (InterruptedException e) {
@@ -98,6 +100,7 @@ public class ClientGui {
 			fxml.setController(manEmps);
 			ManageEmployees.setScene(new Scene(fxml.load()));
 			ManageEmployees.setTitle("Manage Employees");
+			ManageEmployees.setResizable(false);
 			ManageEmployees.show();
 		} catch (UnknownHostException e) {
 			// TODO
@@ -156,9 +159,10 @@ public class ClientGui {
 			fxml.setController(login);
 			LoginGui.setScene(new Scene(fxml.load()));
 			LoginGui.setTitle("Login");
+			LoginGui.setResizable(false);
 			LoginGui.show();
 			Stage stage = (Stage) logoutBtn.getScene().getWindow();
-			stage.close();//here
+			stage.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

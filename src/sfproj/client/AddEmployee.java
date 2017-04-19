@@ -92,7 +92,8 @@ public class AddEmployee {
 				}
 			}
 			cnh.sendToServer("AddEmployee|"+ employeeName.getText() + "|" + deptId + "|" + payPerHour.getText() + "|" + rankID);
-			//addEmployeesStage.close();
+			Stage stage = (Stage) addEmp.getScene().getWindow();
+			stage.close();
 		} catch (UnknownHostException e) {
 			// TODO
 			e.printStackTrace();

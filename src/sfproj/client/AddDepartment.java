@@ -46,7 +46,8 @@ public class AddDepartment {
 		try{
 			//cnh.sendToServer("Add Department: " + deptName.getText());
 			cnh.sendToServer("AddDepartment|" + deptName.getText() + "|" + typeBox.getValue());
-			addDepartmentStage.close();
+			Stage stage = (Stage) addDept.getScene().getWindow();
+			stage.close();
 		} catch (UnknownHostException e) {
 			// TODO
 			e.printStackTrace();

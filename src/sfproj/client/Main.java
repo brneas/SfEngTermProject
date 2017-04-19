@@ -21,6 +21,7 @@ public class Main extends Application{
 		fxml.setController(lg);
 		primaryStage.setScene(new Scene(fxml.load()));
 		//lg.createHandlers();
+		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
 }
