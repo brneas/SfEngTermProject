@@ -4,10 +4,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.UnknownHostException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -69,7 +72,22 @@ public class ManageEmployeeTimes {
 	}
 	
 	public void addClock(){
-		
+		try {
+			AddEmployeeTime addEmp  = new AddEmployeeTime(manageEmpTimesStage);
+			Stage addTimeStage = new Stage();
+			FXMLLoader fxml = new FXMLLoader(AddEmployeeTime.class.getResource("AddEmployeeTimeGui.fxml"));
+			fxml.setController(addEmp);
+			addTimeStage.setScene(new Scene(fxml.load()));
+			addTimeStage.setTitle("Add Clock");
+			addTimeStage.setResizable(false);
+			addTimeStage.show();
+		} catch (UnknownHostException e) {
+			// TODO
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO
+			e.printStackTrace();
+		}
 	}
 	
 }

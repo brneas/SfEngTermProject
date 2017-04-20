@@ -66,7 +66,6 @@ public class ManageEmployees {
 			monday.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 			sunday.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 			sunday.add(Calendar.DATE, 6);
-			System.out.println(df.format(monday.getTime()).toString() + " | " + df.format(sunday.getTime()).toString());
 			mondayD = Date.valueOf(df.format(monday.getTime()).toString());
 			sundayD = Date.valueOf(df.format(sunday.getTime()).toString());
 			while((line = reader.readLine()) != null){

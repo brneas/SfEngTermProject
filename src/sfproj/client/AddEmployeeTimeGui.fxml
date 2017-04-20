@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Pane fx:id="addEmployeeTime" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="163.0" prefWidth="252.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <DatePicker fx:id="day" layoutX="103.0" layoutY="14.0" prefHeight="25.0" prefWidth="136.0" promptText="Date" />
+      <Label fx:id="dateLabel" layoutX="15.0" layoutY="18.0" text="Date" />
+      <TextField fx:id="hoursTxt" layoutX="103.0" layoutY="52.0" prefHeight="25.0" prefWidth="136.0" promptText="Hours Worked" />
+      <Label fx:id="hoursLbl" layoutX="13.0" layoutY="56.0" text="Hours Worked" />
+      <ComboBox fx:id="typeBox" layoutX="103.0" layoutY="89.0" prefHeight="25.0" prefWidth="136.0" promptText="Clock Type" />
+      <Label fx:id="typeLbl" layoutX="13.0" layoutY="93.0" text="Clock Type" />
+      <Button fx:id="addClockBtn" layoutX="91.0" layoutY="126.0" mnemonicParsing="false" onAction="#addClock" text="Add Clock" />
+   </children>
+</Pane>
