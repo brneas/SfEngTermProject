@@ -23,6 +23,7 @@ public class ManageEmployeeTimes {
 	ClientNetHandler cnh;
 	private final String serverIPA = "localhost";
 	private final int port = 5000;
+	private String eId;
 	
 	private ObservableList<timeList> employeeTimes = FXCollections.observableArrayList();
 	
@@ -80,6 +81,7 @@ public class ManageEmployeeTimes {
 			addTimeStage.setScene(new Scene(fxml.load()));
 			addTimeStage.setTitle("Add Clock");
 			addTimeStage.setResizable(false);
+			addEmp.setId(eId);
 			addTimeStage.show();
 		} catch (UnknownHostException e) {
 			// TODO
@@ -88,6 +90,10 @@ public class ManageEmployeeTimes {
 			// TODO
 			e.printStackTrace();
 		}
+	}
+	
+	public void setId(String id){
+		eId = id;
 	}
 	
 }

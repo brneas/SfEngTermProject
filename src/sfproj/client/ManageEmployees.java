@@ -161,6 +161,7 @@ public class ManageEmployees {
 			manageEmpTimesStage.setScene(new Scene(fxml.load()));
 			manageEmpTimesStage.setTitle("Manage Times");
 			manageEmpTimesStage.setResizable(false);
+			manTimes.setId(empList.getSelectionModel().getSelectedItem().getID());
 			manageEmpTimesStage.show();
 		} catch (UnknownHostException e) {
 			// TODO

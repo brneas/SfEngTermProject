@@ -17,6 +17,7 @@ public class AddEmployeeTime {
 	ClientNetHandler cnh;
 	private final String serverIPA = "localhost";
 	private final int port = 5000;
+	private String eId;
 	
 	@FXML DatePicker day;
 	@FXML Label dateLabel;
@@ -24,7 +25,7 @@ public class AddEmployeeTime {
 	@FXML Label typeLbl;
 	@FXML TextField hoursTxt;
 	@FXML ComboBox<String> typeBox;
-	@FXML Button addBlockBtn;
+	@FXML Button addClockBtn;
 	@FXML
 	private void initialize(){
 		ObservableList<String> clockTypes = FXCollections.observableArrayList(); 
@@ -46,13 +47,17 @@ public class AddEmployeeTime {
 	
 	public void addClock(){
 		try {
-			cnh.sendToServer("AddClock|" + day.getValue() + "|" + hoursTxt.getText() + "|" + typeBox.getValue());
-			Stage stage = (Stage) addBlockBtn.getScene().getWindow();
+			cnh.sendToServer("AddClock|" + eId + "|" + day.getValue() + "|" + hoursTxt.getText() + "|" + typeBox.getValue());
+			Stage stage = (Stage) addClockBtn.getScene().getWindow();
 			stage.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void setId(String id){
+		eId = id;
 	}
 	
 	

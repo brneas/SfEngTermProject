@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 import com.mysql.jdbc.PreparedStatement;
 
@@ -214,6 +216,41 @@ public class ServerNetHandler extends AbstractServer{
 				else{
 					client.sendToClient("Login|Success|" + rank);
 				}
+			}
+			else if(message[0].equals("AddClock")){
+				int userId = Integer.parseInt(message[1]);
+				Double hours = Double.parseDouble(message[3]);
+				Timestamp in, out = Timestamp.valueOf(message[2] + " 00:00:00");
+				String type = message[4];
+				int rank = 0;
+				long milSec = 0;
+				if(hours > 4){
+					hours = hours + 0.5;
+				}
+				milSec  = (long) (hours*1000*60*60);
+				in = Timestamp.valueOf(message[2] + " 00:00:00");
+				milSec = milSec + in.getTime();
+				out.setTime(milSec);
+				if(type.equals("Call-Back")){
+					rank = 1;
+				}
+				sStmt = "Insert INTO clock(eId, type, theTime, rank, theType) VALUES(?,?,?,?,?)";
+				ps = con.prepareStatement(sStmt);
+				ps.setInt(1, userId);
+				ps.setString(2, "IN");
+				ps.setTimestamp(3, in);
+				ps.setInt(4, rank);
+				ps.setString(5, type);
+				ps.executeUpdate();
+				
+				sStmt = "Insert INTO clock(eId, type, theTime, rank, theType) VALUES(?,?,?,?,?)";
+				ps = con.prepareStatement(sStmt);
+				ps.setInt(1, userId);
+				ps.setString(2, "OUT");
+				ps.setTimestamp(3, out);
+				ps.setInt(4, rank);
+				ps.setString(5, type);
+				ps.executeUpdate();
 			}
 			
 			rs.close();
