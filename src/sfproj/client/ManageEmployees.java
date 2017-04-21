@@ -172,4 +172,8 @@ public class ManageEmployees {
 		}
 	}
 	
+	public void enableTimes(){
+		manageTimes.setDisable(false);;
+	}
+	
 }

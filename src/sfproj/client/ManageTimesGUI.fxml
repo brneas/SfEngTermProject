@@ -8,13 +8,13 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0" prefWidth="523.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="manEmpTime" layoutX="14.0" layoutY="14.0" text="Manage Employee Times">
+      <Label fx:id="manEmpTime" layoutX="156.0" layoutY="14.0" text="Manage Employee Times">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="addClock" layoutX="393.0" layoutY="15.0" mnemonicParsing="false" onAction="#addClock" text="Add Clock" />
-      <TableView fx:id="empTimes" layoutX="11.0" layoutY="52.0" prefHeight="455.0" prefWidth="501.0">
+      <Button fx:id="addClock" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onAction="#addClock" text="Add Clock" />
+      <TableView fx:id="empTimes" layoutX="11.0" layoutY="52.0" onMouseClicked="#enableEditClock" prefHeight="455.0" prefWidth="501.0">
         <columns>
           <TableColumn fx:id="clockIn" prefWidth="95.0" text="Clock In" />
           <TableColumn fx:id="clockOut" prefWidth="88.0" text="Clock Out" />
@@ -24,5 +24,6 @@
             <TableColumn fx:id="callBack" prefWidth="65.0" text="Call-Back" />
         </columns>
       </TableView>
+      <Button fx:id="editClockBtn" disable="true" layoutX="440.0" layoutY="15.0" mnemonicParsing="false" onAction="#editClock" text="Edit Clock" />
    </children>
 </Pane>

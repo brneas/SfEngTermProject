@@ -9,7 +9,7 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="615.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button fx:id="addEmp" layoutX="595.0" layoutY="14.0" mnemonicParsing="false" onAction="#addEmployee" text="Add Employee" />
-      <TableView fx:id="empList" layoutX="14.0" layoutY="50.0" prefHeight="555.0" prefWidth="674.0">
+      <TableView fx:id="empList" layoutX="14.0" layoutY="50.0" onMouseClicked="#enableTimes" prefHeight="555.0" prefWidth="674.0">
         <columns>
             <TableColumn fx:id="empId" prefWidth="48.0" text="ID" />
           <TableColumn fx:id="empName" prefWidth="144.0" text="Name" />
@@ -23,7 +23,7 @@
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Label>
-      <Button fx:id="manageTimes" layoutX="303.0" layoutY="14.0" mnemonicParsing="false" onAction="#manageTimes" text="Manage Times" />
+      <Button fx:id="manageTimes" disable="true" layoutX="303.0" layoutY="14.0" mnemonicParsing="false" onAction="#manageTimes" text="Manage Times" />
       <Label layoutX="204.0" layoutY="36.0" text="Select an employee and hit manage times to edit times" />
    </children>
 </Pane>

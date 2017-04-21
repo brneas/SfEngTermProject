@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="351.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField fx:id="clockInTxt" layoutX="73.0" layoutY="20.0" prefHeight="25.0" prefWidth="117.0" promptText="Time" />
+      <DatePicker fx:id="clockInDate" layoutX="199.0" layoutY="20.0" prefHeight="25.0" prefWidth="135.0" promptText="Date" />
+      <Label fx:id="clockInLbl" layoutX="12.0" layoutY="24.0" text="Clock In" />
+      <TextField fx:id="clockOutTxt" layoutX="73.0" layoutY="55.0" prefHeight="25.0" prefWidth="117.0" promptText="Time" />
+      <DatePicker fx:id="clockOutDate" layoutX="199.0" layoutY="55.0" prefHeight="25.0" prefWidth="135.0" promptText="Date" />
+      <Label fx:id="clockOutLbl" layoutX="12.0" layoutY="59.0" text="Clock Out" />
+      <Label fx:id="typeLbl" layoutX="14.0" layoutY="93.0" text="Type" />
+      <ComboBox fx:id="clockType" layoutX="73.0" layoutY="89.0" prefHeight="25.0" prefWidth="117.0" promptText="Type" />
+      <Button fx:id="submit" layoutX="199.0" layoutY="89.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="135.0" text="Submit" />
+   </children>
+</Pane>

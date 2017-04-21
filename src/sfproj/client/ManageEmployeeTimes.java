@@ -24,6 +24,10 @@ public class ManageEmployeeTimes {
 	private final String serverIPA = "localhost";
 	private final int port = 5000;
 	private String eId;
+	private String clockDateSet;
+	private String clockInSet;
+	private String clockOutSet;
+	private String clockTypeSet;
 	
 	private ObservableList<timeList> employeeTimes = FXCollections.observableArrayList();
 	
@@ -36,6 +40,7 @@ public class ManageEmployeeTimes {
 	@FXML TableColumn<timeList, String> clockPay;
 	@FXML TableColumn<timeList, String> tHours;
 	@FXML TableColumn<timeList, String> callBack;
+	@FXML Button editClockBtn;
 	@FXML
 	private void initialize() {
 		try {
@@ -92,8 +97,38 @@ public class ManageEmployeeTimes {
 		}
 	}
 	
+	public void editClock(){
+		try {
+			EditEmployeeClock empClock  = new EditEmployeeClock(manageEmpTimesStage);
+			empClock.setEdit(eId, empTimes.getSelectionModel().getSelectedItem().getDate(), empTimes.getSelectionModel().getSelectedItem().getClockIn(), empTimes.getSelectionModel().getSelectedItem().getClockOut(), "Type");
+			System.out.println("Writes" + eId + " | " + empTimes.getSelectionModel().getSelectedItem().getDate() + " | " + empTimes.getSelectionModel().getSelectedItem().getClockIn() + " | " + empTimes.getSelectionModel().getSelectedItem().getClockIn() + " | " + "Type");
+			Stage editEmployeeStage = new Stage();
+			FXMLLoader fxml = new FXMLLoader(EditEmployeeClock.class.getResource("EditEmployeeClockGui.fxml"));
+			fxml.setController(empClock);
+			editEmployeeStage.setScene(new Scene(fxml.load()));
+			editEmployeeStage.setTitle("Edit Clock");
+			editEmployeeStage.setResizable(false);
+			editEmployeeStage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void setId(String id){
 		eId = id;
+	}
+	
+	public void setEdit(String id, String clockDate, String clockIn, String clockOut, String type){
+		eId = id;
+		clockDateSet = clockDate;
+		clockInSet = clockIn;
+		clockOutSet = clockOut;
+		clockTypeSet = type;
+	}
+	
+	public void enableEditClock(){
+		editClockBtn.setDisable(false);;
 	}
 	
 }
