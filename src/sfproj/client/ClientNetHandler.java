@@ -115,6 +115,9 @@ public class ClientNetHandler extends AbstractClient{
 						hours = hours - 0.5;
 					}
 					pay = Double.parseDouble(message[i+4]);
+					//Check if date is in week
+					//add hours and pay
+					//Apply overtime where needed
 					if(!message[i+11].equals("Call-Back") && !message[i+11].equals("Regular") && !message[i+11].equals("Holiday")){
 						hours = 0;
 					}

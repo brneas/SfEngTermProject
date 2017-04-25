@@ -236,7 +236,6 @@ public class ServerNetHandler extends AbstractServer{
 				Double hours = Double.parseDouble(message[3]);
 				Timestamp in, out = Timestamp.valueOf(message[2] + " 00:00:00");
 				String type = message[4];
-				int rank = 0;
 				long milSec = 0;
 				if(hours > 4){
 					hours = hours + 0.5;
@@ -245,25 +244,20 @@ public class ServerNetHandler extends AbstractServer{
 				in = Timestamp.valueOf(message[2] + " 00:00:00");
 				milSec = milSec + in.getTime();
 				out.setTime(milSec);
-				if(type.equals("Call-Back")){
-					rank = 1;
-				}
-				sStmt = "Insert INTO clock(eId, type, theTime, rank, theType) VALUES(?,?,?,?,?)";
+				sStmt = "Insert INTO clock(eId, type, theTime, theType) VALUES(?,?,?,?)";
 				ps = con.prepareStatement(sStmt);
 				ps.setInt(1, userId);
 				ps.setString(2, "IN");
 				ps.setTimestamp(3, in);
-				ps.setInt(4, rank);
-				ps.setString(5, type);
+				ps.setString(4, type);
 				ps.executeUpdate();
 				
-				sStmt = "Insert INTO clock(eId, type, theTime, rank, theType) VALUES(?,?,?,?,?)";
+				sStmt = "Insert INTO clock(eId, type, theTime, theType) VALUES(?,?,?,?)";
 				ps = con.prepareStatement(sStmt);
 				ps.setInt(1, userId);
 				ps.setString(2, "OUT");
 				ps.setTimestamp(3, out);
-				ps.setInt(4, rank);
-				ps.setString(5, type);
+				ps.setString(4, type);
 				ps.executeUpdate();
 			}
 			else if(message[0].equals("EditClock")){

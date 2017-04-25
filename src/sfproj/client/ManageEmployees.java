@@ -57,12 +57,13 @@ public class ManageEmployees {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/employeeList.txt")));
 			String line, lineAgain, lineAgainAgain, lineAgainAgainAgain, rankName = "", deptName = "";//Again Again Again Again Again Again Again Again
-			Double totalPay = 0.00;
+			Double totalPay = 0.00, totalHours = 0.00;
 			Date mondayD, sundayD, clock;
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			DecimalFormat dcf = new DecimalFormat("#.00");
 			Calendar monday = GregorianCalendar.getInstance(Locale.US);
 			Calendar sunday = GregorianCalendar.getInstance(Locale.US);
+			boolean overtime = false;
 			monday.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 			sunday.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 			sunday.add(Calendar.DATE, 6);
@@ -90,6 +91,20 @@ public class ManageEmployees {
 					if(payLines[0].equals(empLines[0])){
 						clock = Date.valueOf(payLines[3]);
 						if(!mondayD.after(clock) && !sundayD.before(clock)){
+							if(overtime){
+								double pay = Double.parseDouble(payLines[5])/Double.parseDouble(payLines[4])/2;
+								totalPay = totalPay + pay*Double.parseDouble(payLines[4]);
+							}
+							else{
+								totalHours = totalHours + Double.parseDouble(payLines[4]);
+								if(totalHours > 40.00){
+									overtime = true;
+									double partHours = totalHours-40.00;
+									//partHours = Double.parseDouble(payLines[4]) - partHours;
+									double pay = Double.parseDouble(payLines[5])/Double.parseDouble(payLines[4])/2;
+									totalPay = totalPay + pay*partHours;
+								}
+							}
 							totalPay = totalPay + Double.parseDouble(payLines[5]);
 						}
 						//totalPay = payLines[1];
@@ -97,6 +112,7 @@ public class ManageEmployees {
 				}
 				employeeData.add(new Employee(empLines[0], empLines[1], deptName, rankName, empLines[3], dcf.format(totalPay)));
 				totalPay = 0.00;
+				totalHours = 0.00;
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

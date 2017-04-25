@@ -2,5 +2,5 @@
 2|Tim|3|200.0|2
 3|Sam|2|10.0|1
 4|Laura Ann Neas|4|200.0|2
-5|Test Add|7|2.99|1
+5|Test Add|7|3.0|1
 6|Mariah Miller|3|500.0|2
