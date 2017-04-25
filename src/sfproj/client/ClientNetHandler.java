@@ -10,6 +10,9 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import javax.swing.JOptionPane;
 
@@ -89,12 +92,23 @@ public class ClientNetHandler extends AbstractClient{
 				long timeDiff;
 				double hours;
 				double pay, totalPay;
+				Double weekHours = 0.00;
+				boolean overtime = false;
 				writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/timeList.txt")));
 				int i=1;
 				if(message[2].equals("IN")){
 					i = 8;
 				}
 				while(i<message.length-1){
+					DateFormat datef = new SimpleDateFormat("yyyy-MM-dd");
+					Calendar monday = GregorianCalendar.getInstance(Locale.US);
+					Calendar sunday = GregorianCalendar.getInstance(Locale.US);
+					Date mondayD, sundayD, clock;
+					monday.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+					sunday.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+					sunday.add(Calendar.DATE, 6);
+					mondayD = Date.valueOf(datef.format(monday.getTime()).toString());
+					sundayD = Date.valueOf(datef.format(sunday.getTime()).toString());
 					Time nextDate = Time.valueOf("22:30:00");
 					in = Time.valueOf(message[i+9]);
 					dateIn = Date.valueOf(message[i+8]);
@@ -115,17 +129,43 @@ public class ClientNetHandler extends AbstractClient{
 						hours = hours - 0.5;
 					}
 					pay = Double.parseDouble(message[i+4]);
-					//Check if date is in week
-					//add hours and pay
-					//Apply overtime where needed
-					if(!message[i+11].equals("Call-Back") && !message[i+11].equals("Regular") && !message[i+11].equals("Holiday")){
-						hours = 0;
-					}
-					if(message[i+11].equals("Call-Back") && hours < 4){
-						totalPay = 4*pay;
+					clock = Date.valueOf(message[i+8]);
+					if(!mondayD.after(clock) && !sundayD.before(clock)){
+						weekHours = weekHours + hours;
+						if(!message[i+11].equals("Call-Back") && !message[i+11].equals("Regular") && !message[i+11].equals("Holiday")){
+							hours = 0;
+						}
+						if(message[i+11].equals("Call-Back") && hours < 4){
+							totalPay = 4*pay;
+						}
+						else{
+							if(overtime){
+								totalPay = hours*(pay*1.5);
+							}
+							else{
+								if(weekHours > 40.00){
+									overtime = true;
+									double partHours = weekHours-40.00;
+									totalPay = partHours*(pay/2);
+									//double temp = hours-partHours;
+									totalPay = totalPay + hours*pay;
+								}
+								else{
+									totalPay = hours*pay;
+								}
+							}
+						}
 					}
 					else{
-						totalPay = hours*pay;
+						if(!message[i+11].equals("Call-Back") && !message[i+11].equals("Regular") && !message[i+11].equals("Holiday")){
+							hours = 0;
+						}
+						if(message[i+11].equals("Call-Back") && hours < 4){
+							totalPay = 4*pay;
+						}
+						else{
+							totalPay = hours*pay;
+						}
 					}
 					System.out.println("Wrote: " + message[i] + "-" + message[i+6] + "|" + message[i+9] + "|" + message[i+3] + "|" + clockDate + "|" + df.format(hours) + "|" + df.format(totalPay)+ "|" + message[i+11]);
 					writer.write(message[i] + "-" + message[i+6] + "|" + message[i+9] + "|" + message[i+3] + "|" + clockDate + "|" + df.format(hours) + "|" + df.format(totalPay)+ "|" + message[i+11]);
