@@ -6,18 +6,20 @@ public class timeList {
 	private String date;
 	private String hoursWorked;
 	private String totalPay;
-	private String callBack;
+	private String clockType;
+	private String ids;
 	
 	public timeList(){
 		//I hate java so much
 	}
-	public timeList(String clockIn, String clockOut, String date, String hoursWorked, String totalPay, String callBack){
+	public timeList(String clockIn, String clockOut, String date, String hoursWorked, String totalPay, String clockType, String ids){
 		this.setClockIn(clockIn);
 		this.setClockOut(clockOut);
 		this.setDate(date);
 		this.setHoursWorked(hoursWorked);
 		this.setTotalPay(totalPay);
-		this.callBack = callBack;
+		this.setClockType(clockType);
+		this.setIds(ids);
 	}
 	public String getClockIn() {
 		return clockIn;
@@ -49,10 +51,16 @@ public class timeList {
 	public void setTotalPay(String totalPay) {
 		this.totalPay = totalPay;
 	}
-	public String getCallBack() {
-		return callBack;
+	public String getClockType() {
+		return clockType;
 	}
-	public void setCallBack(String callBack) {
-		this.callBack = callBack;
+	public void setClockType(String callBack) {
+		this.clockType = callBack;
+	}
+	public String getIds() {
+		return ids;
+	}
+	public void setIds(String ids) {
+		this.ids = ids;
 	}
 }

@@ -39,23 +39,17 @@ public class ManageEmployeeTimes {
 	@FXML TableColumn<timeList, String> clockDate;
 	@FXML TableColumn<timeList, String> clockPay;
 	@FXML TableColumn<timeList, String> tHours;
-	@FXML TableColumn<timeList, String> callBack;
+	@FXML TableColumn<timeList, String> clockType;
+	@FXML TableColumn<timeList, String> clockId;
 	@FXML Button editClockBtn;
 	@FXML
 	private void initialize() {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/timeList.txt")));
 			String line;
-			String callback = "False";
 			while((line = reader.readLine()) != null){
 				String[] timeLines = ((String) line).split("\\|");
-				if(timeLines[5].equals("1")){
-					callback = "True";
-				}
-				else{
-					callback = "False";
-				}
-				employeeTimes.add(new timeList(timeLines[0], timeLines[1], timeLines[2], timeLines[3], timeLines[4], callback));
+				employeeTimes.add(new timeList(timeLines[1], timeLines[2], timeLines[3], timeLines[4], timeLines[5], timeLines[6], timeLines[0]));
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -67,7 +61,8 @@ public class ManageEmployeeTimes {
 		clockDate.setCellValueFactory(new PropertyValueFactory<timeList, String>("date"));
 		clockPay.setCellValueFactory(new PropertyValueFactory<timeList, String>("hoursWorked"));
 		tHours.setCellValueFactory(new PropertyValueFactory<timeList, String>("totalPay"));
-		callBack.setCellValueFactory(new PropertyValueFactory<timeList, String>("callBack"));
+		clockType.setCellValueFactory(new PropertyValueFactory<timeList, String>("clockType"));
+		clockId.setCellValueFactory(new PropertyValueFactory<timeList, String>("clockId"));
 		empTimes.setItems(employeeTimes);
 	}
 	
@@ -100,8 +95,8 @@ public class ManageEmployeeTimes {
 	public void editClock(){
 		try {
 			EditEmployeeClock empClock  = new EditEmployeeClock(manageEmpTimesStage);
-			empClock.setEdit(eId, empTimes.getSelectionModel().getSelectedItem().getDate(), empTimes.getSelectionModel().getSelectedItem().getClockIn(), empTimes.getSelectionModel().getSelectedItem().getClockOut(), "Type");
-			System.out.println("Writes" + eId + " | " + empTimes.getSelectionModel().getSelectedItem().getDate() + " | " + empTimes.getSelectionModel().getSelectedItem().getClockIn() + " | " + empTimes.getSelectionModel().getSelectedItem().getClockIn() + " | " + "Type");
+			empClock.setEdit(eId + "-" + empTimes.getSelectionModel().getSelectedItem().getIds(), empTimes.getSelectionModel().getSelectedItem().getDate(), empTimes.getSelectionModel().getSelectedItem().getClockIn(), empTimes.getSelectionModel().getSelectedItem().getClockOut(), empTimes.getSelectionModel().getSelectedItem().getClockType());
+			//System.out.println("Writes" + eId + " | " + empTimes.getSelectionModel().getSelectedItem().getDate() + " | " + empTimes.getSelectionModel().getSelectedItem().getClockIn() + " | " + empTimes.getSelectionModel().getSelectedItem().getClockIn() + " | " + "Type");
 			Stage editEmployeeStage = new Stage();
 			FXMLLoader fxml = new FXMLLoader(EditEmployeeClock.class.getResource("EditEmployeeClockGui.fxml"));
 			fxml.setController(empClock);

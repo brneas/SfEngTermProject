@@ -16,12 +16,13 @@
       <Button fx:id="addClock" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onAction="#addClock" text="Add Clock" />
       <TableView fx:id="empTimes" layoutX="11.0" layoutY="52.0" onMouseClicked="#enableEditClock" prefHeight="455.0" prefWidth="501.0">
         <columns>
-          <TableColumn fx:id="clockIn" prefWidth="95.0" text="Clock In" />
-          <TableColumn fx:id="clockOut" prefWidth="88.0" text="Clock Out" />
-            <TableColumn fx:id="clockDate" prefWidth="112.0" text="Date" />
-            <TableColumn fx:id="clockPay" prefWidth="74.0" text="Total Hours" />
-            <TableColumn fx:id="tHours" prefWidth="66.0" text="Paid" />
-            <TableColumn fx:id="callBack" prefWidth="65.0" text="Call-Back" />
+          <TableColumn fx:id="clockIn" prefWidth="84.0" text="Clock In" />
+          <TableColumn fx:id="clockOut" prefWidth="87.0" text="Clock Out" />
+            <TableColumn fx:id="clockDate" prefWidth="85.0" text="Date" />
+            <TableColumn fx:id="clockPay" prefWidth="71.0" text="Total Hours" />
+            <TableColumn fx:id="tHours" prefWidth="67.0" text="Paid" />
+            <TableColumn fx:id="clockType" prefWidth="106.0" text="Type" />
+            <TableColumn fx:id="clockId" prefWidth="75.0" text="Ids" visible="false" />
         </columns>
       </TableView>
       <Button fx:id="editClockBtn" disable="true" layoutX="440.0" layoutY="15.0" mnemonicParsing="false" onAction="#editClock" text="Edit Clock" />

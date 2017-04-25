@@ -112,6 +112,7 @@ public class ServerNetHandler extends AbstractServer{
 			else if(message[0].equals("ClockIn")){
 				String userId = message[1].substring(3, 7);
 				String type = "";
+				String theType = "";
 				String getClockStmt = "SELECT * FROM clock WHERE eID=? ORDER BY theTime DESC LIMIT 1";
 				ps = con.prepareStatement(getClockStmt);
 				ps.setInt(1, Integer.parseInt(userId));
@@ -128,17 +129,24 @@ public class ServerNetHandler extends AbstractServer{
 					}
 				}
 				else{
-					sStmt = "INSERT INTO clock(eId,type,rank) VALUES(?,?,?)";
+					if(message[2].equals("1")){
+						theType = "Call-Back";
+					}
+					else{
+						theType = "Regular";
+					}
+					sStmt = "INSERT INTO clock(eId,type,theType) VALUES(?,?,?)";
 					ps = con.prepareStatement(sStmt);
 					ps.setInt(1, Integer.parseInt(userId));
 					ps.setString(2, "IN");
-					ps.setInt(3, Integer.parseInt(message[2])); 
+					ps.setString(3, theType); 
 					ps.executeUpdate();
 				}
 			}
 			else if(message[0].equals("ClockOut")){
 				String userId = message[1].substring(3, 7);
 				String type = "";
+				String theType = "";
 				String getClockStmt = "SELECT * FROM clock WHERE eID=? ORDER BY theTime DESC LIMIT 1";
 				ps = con.prepareStatement(getClockStmt);
 				ps.setInt(1, Integer.parseInt(userId));
@@ -155,11 +163,17 @@ public class ServerNetHandler extends AbstractServer{
 					}
 				}
 				else{
-					sStmt = "INSERT INTO clock(eId,type,rank) VALUES(?,?,?)";
+					if(message[2].equals("1")){
+						theType = "Call-Back";
+					}
+					else{
+						theType = "Regular";
+					}
+					sStmt = "INSERT INTO clock(eId,type,theType) VALUES(?,?,?)";
 					ps = con.prepareStatement(sStmt);
 					ps.setInt(1, Integer.parseInt(userId));
 					ps.setString(2, "OUT");
-					ps.setInt(3, Integer.parseInt(message[2])); 
+					ps.setString(3, theType); 
 					ps.executeUpdate();
 				}
 			}
@@ -170,7 +184,7 @@ public class ServerNetHandler extends AbstractServer{
 				rs = ps.executeQuery();
 				String tempString = "TimeList|";
 				while(rs.next()){
-					tempString = tempString + rs.getString("type") + "|" + rs.getDate("Date") + "|" + rs.getTime("Time") + "|" + rs.getDouble("pay") + "|" + rs.getInt("callBack") + "|";
+					tempString = tempString + rs.getInt("id") + "|" + rs.getString("type") + "|" + rs.getDate("Date") + "|" + rs.getTime("Time") + "|" + rs.getDouble("pay") + "|" + rs.getString("theType") + "|";
 				}
 				try {
 					client.sendToClient(tempString);
@@ -185,7 +199,7 @@ public class ServerNetHandler extends AbstractServer{
 				rs = stmt.executeQuery(sStmt);
 				String tempString = "FullTimeList|";
 				while(rs.next()){
-					tempString = tempString + rs.getInt("eId") + "|" + rs.getString("type") + "|" + rs.getDate("Date") + "|" + rs.getTime("Time") + "|" + rs.getDouble("pay") + "|" + rs.getInt("callBack") + "|";
+					tempString = tempString + rs.getInt("eId") + "|" + rs.getString("type") + "|" + rs.getDate("Date") + "|" + rs.getTime("Time") + "|" + rs.getDouble("pay") + "|" + rs.getString("theType") + "|";
 				}
 				try {
 					client.sendToClient(tempString);
@@ -250,6 +264,31 @@ public class ServerNetHandler extends AbstractServer{
 				ps.setTimestamp(3, out);
 				ps.setInt(4, rank);
 				ps.setString(5, type);
+				ps.executeUpdate();
+			}
+			else if(message[0].equals("EditClock")){
+				System.out.println("Hello");
+				String[] idLine = ((String) message[1]).split("-");
+				int eId = Integer.parseInt(idLine[0]);
+				int outId = Integer.parseInt(idLine[1]); //I think these might be backwards
+				int inId = Integer.parseInt(idLine[2]);
+				System.out.println(eId + " | " + outId+ " | " + inId);
+				//System.out.println(message[2] + " | " + message[3]);
+				Timestamp in = Timestamp.valueOf(message[5] + " " + message[3]);
+				Timestamp out = Timestamp.valueOf(message[4] + " " + message[2]);
+				System.out.println(in + " | " + out);
+				sStmt = "UPDATE clock SET theTime=?, theType=? WHERE id=?";
+				ps = con.prepareStatement(sStmt);
+				ps.setTimestamp(1, out);
+				ps.setString(2, message[6]);
+				ps.setInt(3, inId);
+				ps.executeUpdate();
+				
+				sStmt = "UPDATE clock SET theTime=?, theType=? WHERE id=?";
+				ps = con.prepareStatement(sStmt);
+				ps.setTimestamp(1, in);
+				ps.setString(2, message[6]);
+				ps.setInt(3, outId);
 				ps.executeUpdate();
 			}
 			

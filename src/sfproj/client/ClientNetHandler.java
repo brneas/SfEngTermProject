@@ -91,15 +91,15 @@ public class ClientNetHandler extends AbstractClient{
 				double pay, totalPay;
 				writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/timeList.txt")));
 				int i=1;
-				if(message[1].equals("IN")){
-					i = 6;
+				if(message[2].equals("IN")){
+					i = 8;
 				}
 				while(i<message.length-1){
 					Time nextDate = Time.valueOf("22:30:00");
-					in = Time.valueOf(message[i+7]);
-					dateIn = Date.valueOf(message[i+6]);
-					out = Time.valueOf(message[i+2]);
-					dateOut = Date.valueOf(message[i+1]);
+					in = Time.valueOf(message[i+9]);
+					dateIn = Date.valueOf(message[i+8]);
+					out = Time.valueOf(message[i+3]);
+					dateOut = Date.valueOf(message[i+2]);
 					clockDate = dateIn;
 					timeDiff = (out.getTime()-in.getTime());
 					if(dateOut.after(dateIn)){
@@ -114,16 +114,19 @@ public class ClientNetHandler extends AbstractClient{
 					if(hours > 4.0){
 						hours = hours - 0.5;
 					}
-					pay = Double.parseDouble(message[i+3]);
-					if(message[i+9].equals("1") && hours < 4){
+					pay = Double.parseDouble(message[i+4]);
+					if(!message[i+11].equals("Call-Back") && !message[i+11].equals("Regular") && !message[i+11].equals("Holiday")){
+						hours = 0;
+					}
+					if(message[i+11].equals("Call-Back") && hours < 4){
 						totalPay = 4*pay;
 					}
 					else{
 						totalPay = hours*pay;
 					}
-					System.out.println("Wrote: " + message[i+7] + "|" + message[i+2] + "|" + message[i+6] + "|" + df.format(hours) + "|" + df.format(totalPay)+ "|" + message[i+9]);
-					writer.write(message[i+7] + "|" + message[i+2] + "|" + clockDate + "|" + df.format(hours) + "|" + df.format(totalPay)+ "|" + message[i+9]);
-					i = i+10;
+					System.out.println("Wrote: " + message[i] + "-" + message[i+6] + "|" + message[i+9] + "|" + message[i+3] + "|" + clockDate + "|" + df.format(hours) + "|" + df.format(totalPay)+ "|" + message[i+11]);
+					writer.write(message[i] + "-" + message[i+6] + "|" + message[i+9] + "|" + message[i+3] + "|" + clockDate + "|" + df.format(hours) + "|" + df.format(totalPay)+ "|" + message[i+11]);
+					i = i+12;
 					writer.newLine();
 					writer.flush();
 				}
@@ -166,7 +169,10 @@ public class ClientNetHandler extends AbstractClient{
 						hours = hours - 0.5;
 					}
 					pay = Double.parseDouble(message[i+4]);
-					if(message[i+11].equals("1") && hours < 4){
+					if(!message[i+11].equals("Call-Back") && !message[i+11].equals("Regular") && !message[i+11].equals("Holiday")){
+						hours = 0;
+					}
+					if(message[i+11].equals("Call-Back") && hours < 4){
 						totalPay = 4*pay;
 					}
 					else{
