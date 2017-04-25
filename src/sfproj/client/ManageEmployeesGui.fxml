@@ -19,11 +19,11 @@
             <TableColumn fx:id="empWPay" prefWidth="90.0" text="Weeks Pay" />
         </columns>
       </TableView>
-      <Label fx:id="empLbl" layoutX="14.0" layoutY="14.0" text="Employees">
+      <Label fx:id="empLbl" layoutX="305.0" layoutY="14.0" text="Employees">
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Label>
-      <Button fx:id="manageTimes" disable="true" layoutX="303.0" layoutY="14.0" mnemonicParsing="false" onAction="#manageTimes" text="Manage Times" />
-      <Label layoutX="204.0" layoutY="36.0" text="Select an employee and hit manage times to edit times" />
+      <Button fx:id="manageTimes" disable="true" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onAction="#manageTimes" text="Manage Times" />
+      <Button fx:id="retireBtn" disable="true" layoutX="122.0" layoutY="15.0" mnemonicParsing="false" onAction="#retire" text="Retire" />
    </children>
 </Pane>

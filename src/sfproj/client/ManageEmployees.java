@@ -44,6 +44,7 @@ public class ManageEmployees {
 	
 	@FXML Button addEmp;
 	@FXML Button manageTimes;
+	@FXML Button retireBtn;
 	@FXML TableView<Employee> empList;
 	@FXML Label empLbl;
 	@FXML TableColumn<Employee, String> empId;
@@ -188,8 +189,13 @@ public class ManageEmployees {
 		}
 	}
 	
+	public void retire(){
+		
+	}
+	
 	public void enableTimes(){
 		manageTimes.setDisable(false);;
+		retireBtn.setDisable(false);;
 	}
 	
 }
