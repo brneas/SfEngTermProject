@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 import com.mysql.jdbc.PreparedStatement;
 
@@ -227,6 +228,9 @@ public class ServerNetHandler extends AbstractServer{
 				if(name.isEmpty()){
 					client.sendToClient("Login|Fail");
 				}
+				else if(rank.equals("3")){
+					client.sendToClient("Login|Fail|3");
+				}
 				else{
 					client.sendToClient("Login|Success|" + rank);
 				}
@@ -261,7 +265,6 @@ public class ServerNetHandler extends AbstractServer{
 				ps.executeUpdate();
 			}
 			else if(message[0].equals("EditClock")){
-				System.out.println("Hello");
 				String[] idLine = ((String) message[1]).split("-");
 				int eId = Integer.parseInt(idLine[0]);
 				int outId = Integer.parseInt(idLine[1]); //I think these might be backwards
@@ -283,6 +286,41 @@ public class ServerNetHandler extends AbstractServer{
 				ps.setTimestamp(1, in);
 				ps.setString(2, message[6]);
 				ps.setInt(3, outId);
+				ps.executeUpdate();
+			}
+			else if(message[0].equals("Retire")){
+				int userId = Integer.parseInt(message[1]);
+				Double hours = Double.parseDouble(message[2]);
+				LocalDate today = LocalDate.now();
+				Timestamp in, out = Timestamp.valueOf(today.toString() + " 00:00:00");
+				String type = "Regular";
+				long milSec = 0;
+				if(hours > 4){
+					hours = hours + 0.5;
+				}
+				milSec  = (long) (hours*1000*60*60);
+				in = Timestamp.valueOf(today.toString() + " 00:00:00");
+				milSec = milSec + in.getTime();
+				out.setTime(milSec);
+				sStmt = "Insert INTO clock(eId, type, theTime, theType) VALUES(?,?,?,?)";
+				ps = con.prepareStatement(sStmt);
+				ps.setInt(1, userId);
+				ps.setString(2, "IN");
+				ps.setTimestamp(3, in);
+				ps.setString(4, type);
+				ps.executeUpdate();
+				
+				sStmt = "Insert INTO clock(eId, type, theTime, theType) VALUES(?,?,?,?)";
+				ps = con.prepareStatement(sStmt);
+				ps.setInt(1, userId);
+				ps.setString(2, "OUT");
+				ps.setTimestamp(3, out);
+				ps.setString(4, type);
+				ps.executeUpdate();
+				
+				sStmt = "UPDATE employee SET rank=3 WHERE id=?";
+				ps = con.prepareStatement(sStmt);
+				ps.setInt(1, userId);
 				ps.executeUpdate();
 			}
 			

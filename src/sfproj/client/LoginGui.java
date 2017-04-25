@@ -67,7 +67,12 @@ public class LoginGui {
 						stage.close();
 					}
 					else{
-						JOptionPane.showMessageDialog(null, "That user does not exist.", "Login Error " + "Error", JOptionPane.INFORMATION_MESSAGE);
+						if(loginLine[1].equals("3")){
+							JOptionPane.showMessageDialog(null, "You are retired and can no longer clock in.", "Login Error " + "Error", JOptionPane.INFORMATION_MESSAGE);
+						}
+						else{
+							JOptionPane.showMessageDialog(null, "That user does not exist.", "Login Error " + "Error", JOptionPane.INFORMATION_MESSAGE);
+						}
 					}
 				}
 			} catch (InterruptedException e) {

@@ -107,9 +107,6 @@ public class ManageEmployees {
 								}
 							}
 							totalPay = totalPay + Double.parseDouble(payLines[5]);
-							if(empLines[0].equals("6")){
-								System.out.println(totalPay + " " + Double.parseDouble(payLines[5]));
-							}
 						}
 						//totalPay = payLines[1];
 					}
@@ -195,8 +192,16 @@ public class ManageEmployees {
 		}
 	}
 	
-	public void retire(){
-		
+	public void retire() throws IOException{
+		Retire retir  = new Retire(manageEmployeesStage);
+		Stage retireStage = new Stage();
+		FXMLLoader fxml = new FXMLLoader(Retire.class.getResource("RetireGui.fxml"));
+		fxml.setController(retir);
+		retireStage.setScene(new Scene(fxml.load()));
+		retireStage.setTitle("Manage Times");
+		retireStage.setResizable(false);
+		retir.getEId(empList.getSelectionModel().getSelectedItem().getID());
+		retireStage.show();
 	}
 	
 	public void enableTimes(){

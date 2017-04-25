@@ -88,6 +88,7 @@ public class ClientGui {
 		try {
 			cnh.sendToServer("RequestEmployee");
 			cnh.sendToServer("RequestFullTimes");
+			cnh.sendToServer("RequestRank");
 			try {
 				TimeUnit.SECONDS.sleep(1);
 			} catch (InterruptedException e) {

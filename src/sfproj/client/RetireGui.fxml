@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="155.0" prefWidth="240.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="hoursLbl" layoutX="14.0" layoutY="54.0" text="Hours" />
+      <TextField fx:id="vacaHrsTxt" layoutX="77.0" layoutY="50.0" promptText="Vacation Hours" />
+      <Button fx:id="submitBtn" layoutX="94.0" layoutY="97.0" mnemonicParsing="false" onAction="#retireSend" text="Submit" />
+   </children>
+</Pane>
