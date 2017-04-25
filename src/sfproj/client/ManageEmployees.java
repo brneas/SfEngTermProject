@@ -61,7 +61,7 @@ public class ManageEmployees {
 			Double totalPay = 0.00, totalHours = 0.00;
 			Date mondayD, sundayD, clock;
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			DecimalFormat dcf = new DecimalFormat("#.00");
+			DecimalFormat dcf = new DecimalFormat("0.00");
 			Calendar monday = GregorianCalendar.getInstance(Locale.US);
 			Calendar sunday = GregorianCalendar.getInstance(Locale.US);
 			boolean overtime = false;
@@ -107,9 +107,15 @@ public class ManageEmployees {
 								}
 							}
 							totalPay = totalPay + Double.parseDouble(payLines[5]);
+							if(empLines[0].equals("6")){
+								System.out.println(totalPay + " " + Double.parseDouble(payLines[5]));
+							}
 						}
 						//totalPay = payLines[1];
 					}
+				}
+				if(totalPay.isNaN()){
+					totalPay = 0.00;
 				}
 				employeeData.add(new Employee(empLines[0], empLines[1], deptName, rankName, empLines[3], dcf.format(totalPay)));
 				totalPay = 0.00;

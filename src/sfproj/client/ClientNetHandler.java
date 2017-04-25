@@ -180,12 +180,12 @@ public class ClientNetHandler extends AbstractClient{
 		}
 		else if(message[0].equals("FullTimeList")){
 			try {
-				DecimalFormat df = new DecimalFormat("#.00");
+				DecimalFormat df = new DecimalFormat("0.00");
 				Time in, out;
 				Date dateIn, dateOut, clockDate;
 				long timeDiff;
 				double hours;
-				double pay, totalPay;
+				double pay, totalPay = 0.00;
 				writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/fullTimeList.txt")));
 				int i=1;
 				if(message[1].equals("IN")){
@@ -213,7 +213,7 @@ public class ClientNetHandler extends AbstractClient{
 					}
 					pay = Double.parseDouble(message[i+4]);
 					if(!message[i+11].equals("Call-Back") && !message[i+11].equals("Regular") && !message[i+11].equals("Holiday")){
-						hours = 0;
+						hours = 0.00;
 					}
 					if(message[i+11].equals("Call-Back") && hours < 4){
 						totalPay = 4*pay;
