@@ -86,6 +86,7 @@ public class ClientGui {
 	
 	public void manageEmployees(){
 		try {
+			cnh = new ClientNetHandler(serverIPA, port);
 			cnh.sendToServer("RequestEmployee");
 			cnh.sendToServer("RequestFullTimes");
 			cnh.sendToServer("RequestRank");
