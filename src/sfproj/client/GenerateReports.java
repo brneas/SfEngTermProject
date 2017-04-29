@@ -19,6 +19,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Section;
@@ -365,6 +366,106 @@ private Stage generateReports;
 	}
 	
 	public void timeCard(){
-		
+		try {
+			cnh = new ClientNetHandler(serverIPA, port);
+			cnh.sendToServer("RequestFullTimes");
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String FILE = "C:/temp/TimeCards.pdf";
+			Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
+		    Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
+		    Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(FILE));
+            document.open();
+            document.addTitle("Emp Report");
+            PdfPTable table;
+			DecimalFormat payF = new DecimalFormat("0.00");
+			DecimalFormat hourF = new DecimalFormat("0.0");
+			BufferedWriter writer = null;
+			String line, lineAgain, lineAgainAgain;
+			double hoursTotal = 0.00, totalPay = 0.00;
+			BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/employeeList.txt")));
+			while((line = reader.readLine()) != null){
+				table = new PdfPTable(6);
+				table.getDefaultCell().setBorder(0);
+	            table.setSpacingBefore(10);
+				String[] empLines = ((String) line).split("\\|");
+				Paragraph p = new Paragraph(empLines[1], new Font(FontFamily.HELVETICA, 18));
+		        document.add(p);
+		        PdfPCell c1 = new PdfPCell(new Phrase("Date", smallBold));
+	            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	            c1.setBorder(0);
+	            table.addCell(c1);
+	            c1 = new PdfPCell(new Phrase("In", smallBold));
+	            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	            c1.setBorder(0);
+	            table.addCell(c1);
+	            c1 = new PdfPCell(new Phrase("Out", smallBold));
+	            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	            c1.setBorder(0);
+	            table.addCell(c1);
+	            c1 = new PdfPCell(new Phrase("Type", smallBold));
+	            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	            c1.setBorder(0);
+	            table.addCell(c1);
+	            c1 = new PdfPCell(new Phrase("Hours", smallBold));
+	            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	            c1.setBorder(0);
+	            table.addCell(c1);
+	            c1 = new PdfPCell(new Phrase("Pay", smallBold));
+	            c1.setBorder(0);
+	            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	            table.addCell(c1);
+	            table.setHeaderRows(1);
+				BufferedReader readerAgain = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/fullTimeList.txt")));
+				while((lineAgain = readerAgain.readLine()) != null){
+					String[] timeLines = ((String) lineAgain).split("\\|");
+					if(timeLines[0].equals(empLines[0])){
+						table.addCell(timeLines[3]);
+						table.addCell(timeLines[1]);
+						table.addCell(timeLines[2]);
+						table.addCell(timeLines[6]);
+						table.addCell(timeLines[4]);
+						table.addCell(timeLines[5]);
+						totalPay = totalPay + Double.parseDouble(timeLines[5]);
+						hoursTotal = hoursTotal + Double.parseDouble(timeLines[4]);
+					}
+				}
+				table.addCell(" ");
+				table.addCell(" ");
+				table.addCell(" ");
+				table.addCell(" ");
+				c1 = new PdfPCell(new Phrase(hourF.format(hoursTotal), smallBold));
+	            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	            c1.setBorder(0);
+	            table.addCell(c1);
+	            c1 = new PdfPCell(new Phrase(payF.format(totalPay), smallBold));
+	            c1.setBorder(0);
+	            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	            table.addCell(c1);
+	            document.add(table);
+				document.newPage();
+				totalPay = 0.00;
+				hoursTotal = 0.00;
+			}
+			
+			Anchor anchor = new Anchor("Emp Report", catFont);
+            anchor.setName("Emp Report");
+            
+            document.close();
+		} catch (UnknownHostException e) {
+			// TODO
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
