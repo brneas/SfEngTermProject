@@ -81,7 +81,7 @@ public class ServerNetHandler extends AbstractServer{
 				}
 			}
 			else if(message[0].equals("RequestEmployee")){
-				sStmt = "SELECT * FROM employee";
+				sStmt = "SELECT * FROM employee ORDER BY name ASC";
 				rs = stmt.executeQuery(sStmt);
 				String tempString = "EmployeeList|";
 				while(rs.next()){

@@ -1,9 +1,11 @@
 package sfproj.client;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.text.DecimalFormat;
@@ -48,6 +50,147 @@ private Stage generateReports;
 	}
 	
 	public void deptFull(){
+		try {
+			cnh = new ClientNetHandler(serverIPA, port);
+			//cnh.sendToServer("RequestFullTimes");
+			cnh.sendToServer("deptBreif");
+			cnh.sendToServer("Emp");
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			DecimalFormat payF = new DecimalFormat("0.00");
+			DecimalFormat hourF = new DecimalFormat("0.0");
+			BufferedWriter writer = null;
+			String line, lineAgain, lineAgainAgain;
+			writer = writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/deptFull.txt")));
+			double hours = 0.00, hoursTotal = 0.00, totalPay = 0.00, deptTotalHours = 0.00, deptTotalPay = 0.00;
+			BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/departmentList.txt")));
+			while((line = reader.readLine()) != null){
+				String[] deptLines = ((String) line).split("\\|");
+				writer.write("Department|" + deptLines[1]);
+				writer.newLine();
+				writer.flush();
+				BufferedReader readerAgain = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/employeeList.txt")));
+				while((lineAgain = readerAgain.readLine()) != null){
+					String[] empLines = ((String) lineAgain).split("\\|");
+					if(empLines[2].equals(deptLines[0])){
+						BufferedReader readerAgainAgain = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/fullTimeList.txt")));
+						while((lineAgainAgain = readerAgainAgain.readLine()) != null){
+							String[] empTimes = ((String) lineAgainAgain).split("\\|");
+							if(empTimes[0].equals(empLines[0])){
+								hours = hours + Double.parseDouble(empTimes[4]);
+								totalPay = totalPay + Double.parseDouble(empLines[3]);
+							}
+						}
+						writer.write("Employee|" + empLines[1] + "|" + hourF.format(hours) + "|" + payF.format(Double.parseDouble(empLines[3])));
+						hoursTotal = hoursTotal + hours;
+						writer.newLine();
+						writer.flush();
+						hours = 0.00;
+					}
+				}
+				writer.write("DeptEnd|" + hourF.format(hoursTotal) + "|" + payF.format(totalPay));
+				deptTotalHours = deptTotalHours + hoursTotal;
+				deptTotalPay = deptTotalPay + totalPay;
+				writer.newLine();
+				writer.flush();
+				hoursTotal = 0.00;
+				totalPay = 0.00;
+			}
+			writer.write("End|"+ hourF.format(deptTotalHours) + "|" + payF.format(deptTotalPay));
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String FILE = "C:/temp/Dept-FullReport.pdf";
+			Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
+		    Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
+		    Font largeBold = new Font(Font.FontFamily.TIMES_ROMAN, 15, Font.BOLD);
+		    Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(FILE));
+            document.open();
+            document.addTitle("Dept-Brief Report");
+            PdfPTable table = new PdfPTable(4);
+            table.getDefaultCell().setBorder(0);
+            
+            BufferedReader getFull = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/deptFull.txt")));
+            String fullLine;
+            PdfPCell c1 = new PdfPCell(new Phrase("Department", smallBold));
+            c1 = new PdfPCell(new Phrase("Dept Name", largeBold));
+            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            c1.setBorder(0);
+            table.addCell(c1);
+            c1 = new PdfPCell(new Phrase("Emp Name", largeBold));
+            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            c1.setBorder(0);
+            table.addCell(c1);
+            c1 = new PdfPCell(new Phrase("Hours", largeBold));
+            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            c1.setBorder(0);
+            table.addCell(c1);
+            c1 = new PdfPCell(new Phrase("Pay", largeBold));
+            c1.setBorder(0);
+            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(c1);
+            table.setHeaderRows(1);
+            while((fullLine = getFull.readLine()) != null){
+				String[] deptFullLine = ((String) fullLine).split("\\|");
+				if(deptFullLine[0].equals("Department")){
+					c1 = new PdfPCell(new Phrase(deptFullLine[1], smallBold));
+		            c1.setBorder(0);
+					table.addCell(c1);
+					table.addCell(" ");
+					table.addCell(" ");
+					table.addCell(" ");
+				}
+				else if(deptFullLine[0].equals("Employee")){
+					table.addCell(" ");
+					table.addCell(deptFullLine[1]);
+					table.addCell(deptFullLine[2]);
+					table.addCell(deptFullLine[3]);
+				}
+				else if(deptFullLine[0].equals("DeptEnd")){
+					table.addCell(" ");
+					table.addCell(" ");
+					c1 = new PdfPCell(new Phrase(deptFullLine[1], smallBold));
+		            c1.setBorder(0);
+					table.addCell(c1);
+					c1 = new PdfPCell(new Phrase(deptFullLine[2], smallBold));
+		            c1.setBorder(0);
+					table.addCell(c1);
+				}
+				else if(deptFullLine[0].equals("End")){
+					table.addCell(" ");
+					table.addCell(" ");
+					table.addCell(deptFullLine[1]);
+					table.addCell(deptFullLine[2]);
+				}
+            }
+
+            
+            Anchor anchor = new Anchor("Dept-Full Report", catFont);
+            anchor.setName("Dept-Brief Full");
+            table.setSpacingBefore(10);  
+            document.add(table);
+            
+            document.close();
+			
+		} catch (UnknownHostException e) {
+			// TODO
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -94,11 +237,9 @@ private Stage generateReports;
 				if(deptLines[0].equals("End")){
 					table.addCell(" ");
 					c1 = new PdfPCell(new Phrase(deptLines[1], smallBold));
-		            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 		            c1.setBorder(0);
 					table.addCell(c1);
 					c1 = new PdfPCell(new Phrase(deptLines[2], smallBold));
-		            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 		            c1.setBorder(0);
 					table.addCell(c1);
 				}
@@ -183,11 +324,9 @@ private Stage generateReports;
 					table.addCell(" ");
 					table.addCell(" ");
 					c1 = new PdfPCell(new Phrase(payLines[1], smallBold));
-		            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 		            c1.setBorder(0);
 					table.addCell(c1);
 					c1 = new PdfPCell(new Phrase(payLines[2], smallBold));
-		            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 		            c1.setBorder(0);
 					table.addCell(c1);
 				}
