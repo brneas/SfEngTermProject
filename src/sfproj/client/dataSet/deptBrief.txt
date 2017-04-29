@@ -1,0 +1,8 @@
+Coders|12.0|99.99
+Testers|13.4|5.5
+Administration|38.5|566.666667
+Test|0.0|200.0
+Test4|40.0|3.0
+Test Close|0.0|10.0
+BranLand|0.0|1.0
+End|103.93|886.156667

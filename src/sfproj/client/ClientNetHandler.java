@@ -30,7 +30,7 @@ public class ClientNetHandler extends AbstractClient{
 	@Override
 	protected void handleMessageFromServer(Object msg) {
 		System.out.println(msg);
-		String line;
+		String line, lineAgain;
 		BufferedWriter writer = null;
 		String message[] = ((String) msg).split("\\|");
 		if(message[0].equals("DepartmentList")){
@@ -266,6 +266,45 @@ public class ClientNetHandler extends AbstractClient{
 					hoursTotal = hoursTotal + hours;
 					totalPay = totalPay + Double.parseDouble(message[i+5]);
 					i = i+6;
+					hours = 0.00;
+				}
+				writer.write("End" + "|" + hoursTotal + "|" + totalPay);
+				System.out.println("Wrote " + "End" + "|" + hoursTotal + "|" + totalPay);
+				writer.newLine();
+				writer.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if (message[0].equals("DeptBriefList")){
+			try {
+				DecimalFormat payF = new DecimalFormat("0.00");
+				DecimalFormat hourF = new DecimalFormat("0.0");
+				writer = writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/deptBrief.txt")));
+				int i = 1;
+				double hours = 0.00, hoursTotal = 0.00, totalPay = 0.00;
+				while(i < message.length -1){
+					BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/fullTimeList.txt")));
+					while((line = reader.readLine()) != null){
+						String[] timeLines = ((String) line).split("\\|");
+						BufferedReader readerAgain = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/employeeList.txt")));
+						while((lineAgain = readerAgain.readLine()) != null){
+							String[] empLines = ((String) lineAgain).split("\\|");
+							if(empLines[2].equals(message[i])){
+								if(timeLines[0].equals(empLines[0])){
+									hours = hours + Double.parseDouble(timeLines[4]);
+								}
+							}
+						}
+					}
+					writer.write(message[i+1] + "|" + hourF.format(hours) + "|" + message[i+2]);
+					System.out.println("Wrote " + message[i+1] + "|" + hourF.format(hours) + "|" + payF.format(Double.parseDouble(message[i+2])));
+					writer.newLine();
+					writer.flush();
+					hoursTotal = hoursTotal + hours;
+					totalPay = totalPay + Double.parseDouble(message[i+2]);
+					i = i+3;
 					hours = 0.00;
 				}
 				writer.write("End" + "|" + hoursTotal + "|" + totalPay);

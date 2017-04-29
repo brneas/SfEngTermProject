@@ -52,7 +52,82 @@ private Stage generateReports;
 	}
 	
 	public void deptBreif(){
-		
+		try {
+			cnh = new ClientNetHandler(serverIPA, port);
+			//cnh.sendToServer("RequestFullTimes");
+			cnh.sendToServer("deptBreif");
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//PDF START
+			String FILE = "C:/temp/Dept-BriefReport.pdf";
+			Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
+		    Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
+		    Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(FILE));
+            document.open();
+            document.addTitle("Dept-Brief Report");
+            PdfPTable table = new PdfPTable(3);
+            table.getDefaultCell().setBorder(0);
+
+            PdfPCell c1 = new PdfPCell(new Phrase("Department", smallBold));
+            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            c1.setBorder(0);
+            table.addCell(c1);
+            c1 = new PdfPCell(new Phrase("Hours", smallBold));
+            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            c1.setBorder(0);
+            table.addCell(c1);
+            c1 = new PdfPCell(new Phrase("Pay", smallBold));
+            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            c1.setBorder(0);
+            table.addCell(c1);
+            table.setHeaderRows(1);
+            
+            BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/deptBrief.txt")));
+            String line;
+            while((line = reader.readLine()) != null){
+				String[] deptLines = ((String) line).split("\\|");
+				if(deptLines[0].equals("End")){
+					table.addCell(" ");
+					c1 = new PdfPCell(new Phrase(deptLines[1], smallBold));
+		            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+		            c1.setBorder(0);
+					table.addCell(c1);
+					c1 = new PdfPCell(new Phrase(deptLines[2], smallBold));
+		            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+		            c1.setBorder(0);
+					table.addCell(c1);
+				}
+				else{
+					table.addCell(deptLines[0]);
+					table.addCell(deptLines[1]);
+					table.addCell(deptLines[2]);
+				}
+            }
+
+            
+            Anchor anchor = new Anchor("Dept-Brief Report", catFont);
+            anchor.setName("Dept-Brief Report");
+            table.setSpacingBefore(10);  
+            document.add(table);
+            
+            document.close();
+			//PDF END
+			
+		} catch (UnknownHostException e) {
+			// TODO
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void emp(){
@@ -69,8 +144,6 @@ private Stage generateReports;
 			//PDF START
 			String FILE = "C:/temp/EmpReport.pdf";
 			Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
-		    Font redFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.RED);
-		    Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
 		    Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 		    Document document = new Document();
             PdfWriter.getInstance(document, new FileOutputStream(FILE));
