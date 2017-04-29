@@ -1,7 +1,9 @@
 package sfproj.client;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Date;
@@ -236,6 +238,39 @@ public class ClientNetHandler extends AbstractClient{
 			try {
 				writer = writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/login.txt")));
 				writer.write(message[1] + "|" + message[2]);
+				writer.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(message[0].equals("EmpList")){
+			try {
+				DecimalFormat payF = new DecimalFormat("0.00");
+				DecimalFormat hourF = new DecimalFormat("0.0");
+				writer = writer = new BufferedWriter(new FileWriter(new File("src/sfproj/client/dataSet/emp.txt")));
+				int i = 1;
+				double hours = 0.00, hoursTotal = 0.00, totalPay = 0.00;
+				while(i < message.length -1){
+					BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/fullTimeList.txt")));
+					while((line = reader.readLine()) != null){
+						String[] payLines = ((String) line).split("\\|");
+						if(payLines[0].equals(message[i])){
+							hours = hours + Double.parseDouble(payLines[4]);
+						}
+					}
+					writer.write(message[i] + " - " + message[i+1] + "|" + message[i+2] + " - " + message[i+3] + "|" + message[i+4] + "|" + hourF.format(hours) + "|" + payF.format(Double.parseDouble(message[i+5])));
+					System.out.println("Wrote " + message[i] + " - " + message[i+1] + "|" + message[i+2] + " - " + message[i+3] + "|" + message[i+4] + "|" + hours + "|" + message[i+5]);
+					writer.newLine();
+					writer.flush();
+					hoursTotal = hoursTotal + hours;
+					totalPay = totalPay + Double.parseDouble(message[i+5]);
+					i = i+6;
+					hours = 0.00;
+				}
+				writer.write("End" + "|" + hoursTotal + "|" + totalPay);
+				System.out.println("Wrote " + "End" + "|" + hoursTotal + "|" + totalPay);
+				writer.newLine();
 				writer.flush();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

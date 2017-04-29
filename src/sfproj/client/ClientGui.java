@@ -113,6 +113,22 @@ public class ClientGui {
 		}
 	}
 	
+	public void generateReports(){
+		try {
+			GenerateReports genRept  = new GenerateReports(clientStage);
+			Stage GenerateReports = new Stage();
+			FXMLLoader fxml = new FXMLLoader(GenerateReports.class.getResource("GenerateReportsGui.fxml"));
+			fxml.setController(genRept);
+			GenerateReports.setScene(new Scene(fxml.load()));
+			GenerateReports.setTitle("Generate Reports");
+			GenerateReports.setResizable(false);
+			GenerateReports.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void clockIn(){
 		try {
 			Boolean isCallBack = callBack.isSelected();

@@ -323,6 +323,21 @@ public class ServerNetHandler extends AbstractServer{
 				ps.setInt(1, userId);
 				ps.executeUpdate();
 			}
+			else if(message[0].equals("Emp")){
+				sStmt = "SELECT * FROM emp ORDER BY eName ASC";
+				rs = stmt.executeQuery(sStmt);
+				String tempString = "EmpList|";
+				while(rs.next()){
+					tempString = tempString + rs.getInt("eId") + "|" + rs.getString("eName") + "|" + rs.getInt("dId") + "|" + rs.getString("dName") + "|" + rs.getString("dType") + "|" + rs.getDouble("empPay") + "|";
+				}
+				try {
+					client.sendToClient(tempString);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.out.println("Send to client error");
+				}
+			}
 			
 			rs.close();
 			stmt.close();

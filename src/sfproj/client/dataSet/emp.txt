@@ -1,0 +1,11 @@
+1 - Brandon|1 - Coders|Production|12.0|99.99
+4 - Laura Ann Neas|4 - Test|Production|0.0|200.00
+6 - Mariah Miller|3 - Administration|Indirect Production|10.0|500.00
+8 - Milly Miller|3 - Administration|Indirect Production|0.0|1000.00
+3 - Sam|2 - Testers|Production|13.4|10.00
+5 - Test Add|7 - Test4|Indirect Production|40.0|3.00
+7 - Test Again|8 - Test Close|Indirect Production|0.0|10.00
+9 - Test x2|2 - Testers|Production|0.0|1.00
+10 - Test x3|9 - BranLand|Production|0.0|1.00
+2 - Tim|3 - Administration|Indirect Production|28.5|200.00
+End|103.93|2024.99
