@@ -29,6 +29,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 public class GenerateReports {
@@ -362,7 +363,53 @@ private Stage generateReports;
 	}
 	
 	public void export(){
-		
+		try {
+			cnh = new ClientNetHandler(serverIPA, port);
+			cnh.sendToServer("RequestFullTimes");
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			DirectoryChooser chooser = new DirectoryChooser();
+			chooser.setTitle("JavaFX Projects");
+			File selectedDirectory = chooser.showDialog(generateReports);
+			//System.out.println(selectedDirectory);
+			DecimalFormat payF = new DecimalFormat("0.00");
+			DecimalFormat hourF = new DecimalFormat("0.0");
+			
+			String FILE = selectedDirectory+"/Export.txt";
+			BufferedWriter writer = writer = new BufferedWriter(new FileWriter(new File(FILE)));
+			BufferedReader reader = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/employeeList.txt")));
+            String line, lineAgain;
+            Double totalPay = 0.00, totalHours = 0.00;
+            while((line = reader.readLine()) != null){
+            	String[] empLines = ((String) line).split("\\|");
+            	
+            	BufferedReader readerAgain = new BufferedReader(new FileReader(new File("src/sfproj/client/dataSet/fullTimeList.txt")));
+            	while((lineAgain = readerAgain.readLine()) != null){
+            		String[] timeLines = ((String) lineAgain).split("\\|");
+            		if(timeLines[0].equals(empLines[0])){
+            			totalPay = totalPay + Double.parseDouble(timeLines[5]);
+            			totalHours = totalHours + Double.parseDouble(timeLines[4]);
+            		}
+            	}
+                
+            	writer.write(empLines[1] + "," + empLines[0] + "," + empLines[2] + "," + payF.format(Double.parseDouble(empLines[3])) + "," + hourF.format(totalHours) + "," + payF.format(totalPay));
+            	writer.newLine();
+            	writer.flush();
+            	totalHours = 0.00;
+            	totalPay = 0.00;
+            }
+            writer.close();
+		} catch (UnknownHostException e) {
+			// TODO
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO
+			e.printStackTrace();
+		}
 	}
 	
 	public void timeCard(){
