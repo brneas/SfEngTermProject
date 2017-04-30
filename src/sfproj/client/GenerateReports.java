@@ -110,7 +110,10 @@ private Stage generateReports;
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			String FILE = "C:/temp/Dept-FullReport.pdf";
+			DirectoryChooser chooser = new DirectoryChooser();
+			chooser.setTitle("JavaFX Projects");
+			File selectedDirectory = chooser.showDialog(generateReports);
+			String FILE = selectedDirectory+"/Dept-FullReport.pdf";
 			Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
 		    Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 		    Font largeBold = new Font(Font.FontFamily.TIMES_ROMAN, 15, Font.BOLD);
@@ -208,7 +211,10 @@ private Stage generateReports;
 				e.printStackTrace();
 			}
 			//PDF START
-			String FILE = "C:/temp/Dept-BriefReport.pdf";
+			DirectoryChooser chooser = new DirectoryChooser();
+			chooser.setTitle("JavaFX Projects");
+			File selectedDirectory = chooser.showDialog(generateReports);
+			String FILE = selectedDirectory+"/Dept-BriefReport.pdf";
 			Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
 		    Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 		    Document document = new Document();
@@ -285,7 +291,10 @@ private Stage generateReports;
 				e.printStackTrace();
 			}
 			//PDF START
-			String FILE = "C:/temp/EmpReport.pdf";
+			DirectoryChooser chooser = new DirectoryChooser();
+			chooser.setTitle("JavaFX Projects");
+			File selectedDirectory = chooser.showDialog(generateReports);
+			String FILE = selectedDirectory+"/EmpReport.pdf";
 			Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
 		    Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 		    Document document = new Document();
@@ -422,7 +431,10 @@ private Stage generateReports;
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			String FILE = "C:/temp/TimeCards.pdf";
+			DirectoryChooser chooser = new DirectoryChooser();
+			chooser.setTitle("JavaFX Projects");
+			File selectedDirectory = chooser.showDialog(generateReports);
+			String FILE = selectedDirectory+"/TimeCards.pdf";
 			Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
 		    Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 		    Document document = new Document();
